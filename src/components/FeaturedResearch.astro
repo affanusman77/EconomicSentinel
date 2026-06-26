@@ -1,0 +1,179 @@
+---
+const articles = [
+  {
+    tag: 'Monetary Policy',
+    title: 'Inflation expectations and the Pakistani household',
+    excerpt:
+      'How rate decisions ripple into everyday spending — and what young savers can do about it.',
+    author: 'Cohort I · Student Research',
+    read: '8 min read',
+  },
+  {
+    tag: 'Markets',
+    title: "The PSX through a first-time investor's eyes",
+    excerpt:
+      'A ground-up look at equity markets for students taking their first position.',
+    author: 'Cohort I · Student Research',
+    read: '6 min read',
+  },
+  {
+    tag: 'Development',
+    title: 'Microfinance and the informal economy',
+    excerpt:
+      'Where small-scale lending is reshaping access to capital across the country.',
+    author: 'Cohort I · Student Research',
+    read: '10 min read',
+  },
+];
+---
+
+<section class="section research">
+  <div class="container">
+    <header class="research__head" data-reveal>
+      <div>
+        <p class="eyebrow">From the journal</p>
+        <h2 class="research__title">Featured research & articles</h2>
+      </div>
+      <a href="/research" class="btn btn-ghost research__all">
+        View all <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <div class="research__grid">
+      {articles.map((a, i) => (
+        <a href="/research" class="card" data-reveal style={`--i:${i}`}>
+          <div class="card__media" aria-hidden="true">
+            <span class="card__glyph">ES</span>
+          </div>
+          <div class="card__body">
+            <span class="card__tag">{a.tag}</span>
+            <h3 class="card__title">{a.title}</h3>
+            <p class="card__excerpt">{a.excerpt}</p>
+            <div class="card__meta">
+              <span>{a.author}</span>
+              <span>{a.read}</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .research__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: var(--space-12);
+  }
+  .research__title {
+    font-size: var(--fs-h2);
+    margin-top: 1rem;
+  }
+  .research__all {
+    --btn-pad-y: 0.7rem;
+  }
+  .research__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--es-surface);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(227, 177, 103, 0.4);
+    box-shadow: var(--shadow-soft);
+  }
+  .card__media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(100% 100% at 50% 0%, rgba(227, 177, 103, 0.16), transparent 60%),
+      linear-gradient(135deg, #16202c, #0d141d);
+    border-bottom: 1px solid var(--es-line);
+    overflow: hidden;
+  }
+  .card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(227, 177, 103, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(227, 177, 103, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 75%);
+  }
+  .card__glyph {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    background: var(--es-grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.55;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .card:hover .card__glyph {
+    transform: scale(1.08) rotate(-3deg);
+  }
+  .card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    flex: 1;
+  }
+  .card__tag {
+    align-self: flex-start;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--es-gold);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-pill);
+    padding: 0.3rem 0.7rem;
+  }
+  .card__title {
+    font-size: 1.3rem;
+    line-height: 1.2;
+  }
+  .card__excerpt {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    flex: 1;
+  }
+  .card__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--es-line);
+    font-size: 0.78rem;
+    color: var(--es-muted);
+  }
+
+  @media (min-width: 720px) {
+    .research__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

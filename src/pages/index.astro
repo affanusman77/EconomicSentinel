@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import Pillars from '../components/Pillars.astro';
+import Stats from '../components/Stats.astro';
+import FeaturedResearch from '../components/FeaturedResearch.astro';
+import ClosingCTA from '../components/ClosingCTA.astro';
+---
+
+<Layout>
+  <Hero />
+  <Pillars />
+  <Stats />
+  <FeaturedResearch />
+  <ClosingCTA />
+</Layout>
+
+<script>
+  import { initScroll } from '../scripts/scroll-reveal';
+  initScroll();
+</script>

@@ -1,0 +1,317 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout
+  title="Contact & Submit Research — Economic Sentinel"
+  description="Get in touch with Economic Sentinel — partnerships, mentorship, press, or submit your own research for publication."
+>
+  <PageHero
+    eyebrow="Get in touch"
+    title="Let's build economic literacy together."
+    lead="Whether you want to submit research, become a mentor, propose a partnership, or just say hello — we'd love to hear from you."
+  />
+
+  <section class="section">
+    <div class="container contact-grid">
+      <!-- Contact Form -->
+      <div class="contact-form-wrap" data-reveal>
+        <h2 class="contact-form__title">Send us a message</h2>
+        <form
+          class="contact-form"
+          action="https://formspree.io/f/YOUR_FORM_ID"
+          method="POST"
+          data-form
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">Full name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                class="form-input"
+                placeholder="Your name"
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="email" class="form-label">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="form-input"
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="subject" class="form-label">Subject</label>
+            <select id="subject" name="subject" required class="form-input form-select">
+              <option value="" disabled selected>Choose a topic</option>
+              <option value="submit-research">Submit research for publication</option>
+              <option value="internship">Internship inquiry</option>
+              <option value="mentorship">Become a mentor</option>
+              <option value="partnership">Partnership / collaboration</option>
+              <option value="press">Press / media</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="form-label">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              required
+              rows="6"
+              class="form-input form-textarea"
+              placeholder="Tell us what you're thinking..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit">
+            Send message <span class="arrow" aria-hidden="true">→</span>
+          </button>
+
+          <p class="form-success" hidden data-success>
+            Message sent! We'll get back to you soon.
+          </p>
+        </form>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="contact-sidebar" data-reveal>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">Submit your research</h3>
+          <p class="sidebar-card__desc">
+            Have an original economics, finance, or business research paper?
+            We accept submissions from students at any level. Select "Submit
+            research for publication" in the form, or email us directly.
+          </p>
+          <p class="sidebar-card__note">
+            We review all submissions for clarity, rigor, and originality.
+            There is no fee to submit or publish.
+          </p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">Direct contact</h3>
+          <ul class="sidebar-links" role="list">
+            <li>
+              <span class="sidebar-links__label">Email</span>
+              <a href="mailto:hello@economicsentinel.org" class="sidebar-links__value">hello@economicsentinel.org</a>
+            </li>
+            <li>
+              <span class="sidebar-links__label">LinkedIn</span>
+              <a href="#" class="sidebar-links__value">Economic Sentinel</a>
+            </li>
+            <li>
+              <span class="sidebar-links__label">Instagram</span>
+              <a href="#" class="sidebar-links__value">@economicsentinel</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card sidebar-card--cta">
+          <h3 class="sidebar-card__title">Want to mentor?</h3>
+          <p class="sidebar-card__desc">
+            If you're a university student with research experience and want
+            to guide the next cohort, we'd love to hear from you.
+          </p>
+          <a href="mailto:hello@economicsentinel.org?subject=Mentor%20Interest" class="btn btn-ghost sidebar-btn">
+            Reach out <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { initScroll } from '../scripts/scroll-reveal';
+  initScroll();
+
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  const success = document.querySelector<HTMLElement>('[data-success]');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        form.reset();
+        if (success) success.hidden = false;
+      }
+    } catch {
+      // Fallback: let the form submit natively
+      form.submit();
+    }
+  });
+</script>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+
+  /* Form */
+  .contact-form__title {
+    font-size: var(--fs-h2);
+    margin-bottom: var(--space-6);
+  }
+  .form-row {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+  }
+  .form-label {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--es-cream);
+    letter-spacing: 0.02em;
+  }
+  .form-input {
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    color: var(--es-cream);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    transition: border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .form-input::placeholder {
+    color: var(--es-muted);
+    opacity: 0.6;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--es-gold);
+    box-shadow: 0 0 0 3px rgba(227, 177, 103, 0.15);
+  }
+  .form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238A94A6' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+  .form-select option {
+    background: var(--es-surface);
+    color: var(--es-cream);
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+  .form-submit {
+    margin-top: 0.5rem;
+  }
+  .form-success {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(227, 177, 103, 0.12);
+    border: 1px solid rgba(227, 177, 103, 0.3);
+    color: var(--es-gold-light);
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 600px) {
+    .form-row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  /* Sidebar */
+  .contact-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .sidebar-card {
+    padding: 1.75rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background: var(--es-surface);
+  }
+  .sidebar-card--cta {
+    background:
+      radial-gradient(120% 100% at 0% 0%, rgba(227, 177, 103, 0.1), transparent 55%),
+      var(--es-surface);
+  }
+  .sidebar-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    color: var(--es-gold-light);
+  }
+  .sidebar-card__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    margin-bottom: 0.75rem;
+  }
+  .sidebar-card__note {
+    color: var(--es-muted);
+    font-size: 0.8rem;
+    font-style: italic;
+  }
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+  .sidebar-links li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .sidebar-links__label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--es-muted);
+  }
+  .sidebar-links__value {
+    font-size: var(--fs-small);
+    color: var(--es-gold);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .sidebar-links__value:hover {
+    color: var(--es-gold-light);
+  }
+  .sidebar-btn {
+    margin-top: 0.5rem;
+    --btn-pad-y: 0.65rem;
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 880px) {
+    .contact-grid {
+      grid-template-columns: 1.3fr 0.7fr;
+      align-items: start;
+    }
+  }
+</style>

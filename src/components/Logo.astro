@@ -1,0 +1,64 @@
+---
+interface Props {
+  size?: number;
+  wordmark?: boolean;
+}
+const { size = 40, wordmark = true } = Astro.props;
+---
+
+<a class="logo" href="/" aria-label="Economic Sentinel — home">
+  <img
+    class="logo__mark"
+    src="/logo.png"
+    alt=""
+    width={size}
+    height={size}
+    aria-hidden="true"
+    loading="eager"
+  />
+
+  {wordmark && (
+    <span class="logo__word">
+      <span class="logo__name">Economic Sentinel</span>
+      <span class="logo__tag">Research · Pakistan</span>
+    </span>
+  )}
+</a>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--es-cream);
+  }
+  .logo__mark {
+    flex: none;
+    transition: transform 0.6s var(--ease-out);
+  }
+  .logo:hover .logo__mark {
+    transform: scale(1.06);
+  }
+  .logo__word {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.05;
+  }
+  .logo__name {
+    font-family: var(--font-display);
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .logo__tag {
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--es-muted);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .logo:hover .logo__mark {
+      transform: none;
+    }
+  }
+</style>

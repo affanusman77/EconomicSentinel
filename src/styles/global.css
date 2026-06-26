@@ -1,0 +1,249 @@
+/* =============================================================
+   Economic Sentinel — Global base styles
+   ============================================================= */
+
+@import './tokens.css';
+
+/* ---- Reset ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* Account for fixed nav when jumping to anchors */
+  scroll-padding-top: 6rem;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--es-cream);
+  background-color: var(--es-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* Ambient brand wash behind everything */
+  background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(227, 177, 103, 0.08), transparent 70%),
+    radial-gradient(900px 500px at -10% 10%, rgba(18, 26, 36, 0.9), transparent 60%);
+  background-attachment: fixed;
+}
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul[role='list'] {
+  list-style: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--es-gold);
+  color: var(--es-base);
+}
+
+/* ---- Focus visibility (accessibility) ---- */
+:focus-visible {
+  outline: 2px solid var(--es-gold-light);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---- Layout helpers ---- */
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+}
+
+.section {
+  padding-block: var(--section-y);
+  position: relative;
+}
+
+/* ---- Typographic utilities ---- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--es-gold);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  background: var(--es-gold);
+  opacity: 0.6;
+}
+
+.text-gold {
+  background: var(--es-grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-muted {
+  color: var(--es-muted);
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--es-muted);
+  line-height: 1.55;
+}
+
+/* ---- Buttons ---- */
+.btn {
+  --btn-pad-y: 0.95rem;
+  --btn-pad-x: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: var(--btn-pad-y) var(--btn-pad-x);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+  transition: transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    background-color var(--dur) var(--ease-out),
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+  will-change: transform;
+}
+
+.btn-primary {
+  background: var(--es-grad-gold);
+  color: var(--es-base);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 70px -26px rgba(227, 177, 103, 0.6);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--es-cream);
+  border-color: var(--es-line);
+}
+
+.btn-ghost:hover {
+  border-color: var(--es-gold);
+  color: var(--es-gold-light);
+  transform: translateY(-2px);
+}
+
+.btn .arrow {
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* ---- Hairline divider ---- */
+.hr {
+  height: 1px;
+  width: 100%;
+  background: var(--es-line);
+  border: 0;
+}
+
+/* ---- Grain / texture overlay ---- */
+.grain {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* =============================================================
+   Scroll-reveal primitives.
+   Elements start hidden; JS adds .is-in to animate them in.
+   If JS never runs, a fallback reveals them after load so
+   nothing is permanently invisible.
+   ============================================================= */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+}
+
+[data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---- Reduced motion: disable all of it ---- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* No-JS / pre-hydration safety net: reveal content if scripts
+   are disabled so the page is never blank. */
+.no-js [data-reveal] {
+  opacity: 1;
+  transform: none;
+}

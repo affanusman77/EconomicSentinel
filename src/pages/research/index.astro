@@ -1,0 +1,170 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles');
+const articles = allArticles.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+function readingTime(body: string): string {
+  const words = body.trim().split(/\s+/).length;
+  return `${Math.max(1, Math.ceil(words / 250))} min read`;
+}
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).format(date);
+}
+---
+
+<Layout
+  title="Journal — Economic Sentinel"
+  description="Original research and articles authored by students. Reviewed, mentored, and published under each author's own name."
+>
+  <PageHero
+    eyebrow="The journal"
+    title="Student research & articles, published in the open."
+    lead="Original research and articles by students — reviewed, mentored, and published under each author's own name."
+  />
+
+  <section class="section research-index">
+    <div class="container">
+      <div class="articles-grid">
+        {articles.map((article) => (
+          <a
+            href={`/research/${article.id}`}
+            class="article-card"
+            data-reveal
+          >
+            <div class="article-card__media" aria-hidden="true">
+              <span class="article-card__glyph">ES</span>
+            </div>
+            <div class="article-card__body">
+              <h2 class="article-card__title">{article.data.title}</h2>
+              <p class="article-card__excerpt">{article.data.excerpt}</p>
+              <div class="article-card__meta">
+                <span class="article-card__author">{article.data.author}</span>
+                <span class="article-card__details">
+                  {formatDate(new Date(article.data.date))} · {readingTime(article.body ?? '')}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { initScroll } from '../../scripts/scroll-reveal';
+  initScroll();
+</script>
+
+<style>
+  .articles-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--es-surface);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .article-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(227, 177, 103, 0.4);
+    box-shadow: var(--shadow-soft);
+  }
+  .article-card__media {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    background:
+      radial-gradient(100% 100% at 50% 0%, rgba(227, 177, 103, 0.14), transparent 60%),
+      linear-gradient(135deg, #16202c, #0d141d);
+    border-bottom: 1px solid var(--es-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .article-card__media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(227, 177, 103, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(227, 177, 103, 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(circle at 50% 50%, black, transparent 75%);
+  }
+  .article-card__glyph {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    background: var(--es-grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0.45;
+    transition: transform var(--dur-slow) var(--ease-out);
+  }
+  .article-card:hover .article-card__glyph {
+    transform: scale(1.08) rotate(-3deg);
+  }
+  .article-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.5rem;
+    flex: 1;
+  }
+  .article-card__title {
+    font-size: 1.25rem;
+    line-height: var(--lh-snug);
+  }
+  .article-card__excerpt {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    flex: 1;
+  }
+  .article-card__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--es-line);
+    font-size: 0.78rem;
+  }
+  .article-card__author {
+    color: var(--es-cream);
+    font-weight: 600;
+  }
+  .article-card__details {
+    color: var(--es-muted);
+  }
+
+  @media (min-width: 720px) {
+    .articles-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1080px) {
+    .articles-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

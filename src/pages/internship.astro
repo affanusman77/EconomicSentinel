@@ -1,0 +1,651 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout
+  title="Research Internship — Economic Sentinel"
+  description="A mentored research internship in economics, finance and business. Guided by students from Pakistan's top universities. Apply now."
+>
+  <PageHero
+    eyebrow="The internship"
+    title="Your research career starts with a single paper."
+    lead="A structured, mentored internship in economics, finance and business. You'll be paired with a mentor from a top Pakistani university, guided end-to-end through original research, and published under your own name."
+  >
+    <div class="hero-actions" data-reveal>
+      <button type="button" class="btn btn-primary" data-open-coming-soon>
+        Apply now <span class="arrow" aria-hidden="true">→</span>
+      </button>
+      <a href="#modules" class="btn btn-ghost">Explore the program</a>
+    </div>
+  </PageHero>
+
+  <!-- Overview -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="overview-grid">
+        <div class="overview-text" data-reveal>
+          <p class="eyebrow">Program overview</p>
+          <h2>We don't lecture. We mentor.</h2>
+          <p class="lead">
+            The Economic Sentinel Research Internship is built around one idea: the best
+            way to learn economics is to do economics. Each intern is matched with a mentor —
+            a student from one of Pakistan's leading universities — and guided through the
+            full lifecycle of a research paper, from question to publication.
+          </p>
+          <p class="text-muted">
+            No prerequisites beyond intellectual curiosity and the discipline to see a
+            paper through. This is a program for ambitious students who want a real
+            credential, not a certificate.
+          </p>
+        </div>
+        <div class="overview-stats" data-reveal>
+          <div class="overview-stat">
+            <span class="overview-stat__value text-gold">2–3</span>
+            <span class="overview-stat__label">weeks, cohort-based</span>
+          </div>
+          <div class="overview-stat">
+            <span class="overview-stat__value text-gold">1:1</span>
+            <span class="overview-stat__label">mentor-to-intern ratio</span>
+          </div>
+          <div class="overview-stat">
+            <span class="overview-stat__value text-gold">1</span>
+            <span class="overview-stat__label">published paper at the end</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modules -->
+  <section class="section modules-section" id="modules">
+    <div class="container">
+      <header data-reveal>
+        <p class="eyebrow">Research modules</p>
+        <h2>Choose your track.</h2>
+        <p class="lead">Each module offers a distinct lens on the economy. Pick the one that matches your curiosity.</p>
+      </header>
+
+      <div class="modules-grid">
+        <article class="module-card" data-reveal>
+          <span class="module-card__no">Module 01</span>
+          <h3 class="module-card__title">Economic Policy & Business Strategy</h3>
+          <p class="module-card__desc">
+            Macro policy, trade, fiscal analysis, and how governments and firms make
+            decisions under uncertainty. Ideal for students drawn to the intersection
+            of policy and commerce.
+          </p>
+          <ul class="module-card__topics" role="list">
+            <li><span class="pillar__dot" aria-hidden="true"></span>Fiscal & monetary policy</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Trade dynamics</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Corporate strategy</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Regulatory economics</li>
+          </ul>
+        </article>
+
+        <article class="module-card" data-reveal>
+          <span class="module-card__no">Module 02</span>
+          <h3 class="module-card__title">Development Economics & Organizational Management</h3>
+          <p class="module-card__desc">
+            Poverty, inequality, social protection, and how institutions shape economic
+            outcomes. For students interested in the human side of economics.
+          </p>
+          <ul class="module-card__topics" role="list">
+            <li><span class="pillar__dot" aria-hidden="true"></span>Poverty & inequality</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Social protection programs</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Institutional design</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Organizational behavior</li>
+          </ul>
+        </article>
+
+        <article class="module-card" data-reveal>
+          <span class="module-card__no">Module 03</span>
+          <h3 class="module-card__title">Financial Markets & Data Analysis</h3>
+          <p class="module-card__desc">
+            Equities, currencies, central banking, and quantitative reasoning. For
+            students who want to understand how markets work — and how to read them.
+          </p>
+          <ul class="module-card__topics" role="list">
+            <li><span class="pillar__dot" aria-hidden="true"></span>Equity & currency markets</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Central bank policy</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Financial data analysis</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Risk & valuation</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <header data-reveal>
+        <p class="eyebrow">How it works</p>
+        <h2>From application to publication.</h2>
+      </header>
+
+      <div class="timeline">
+        {[
+          { step: '01', title: 'Apply', desc: 'Submit a short application telling us who you are and what you want to research. No CV or prior experience required.' },
+          { step: '02', title: 'Get matched', desc: 'We pair you with a mentor whose expertise aligns with your interest area. Your mentor is a student from a top Pakistani university.' },
+          { step: '03', title: 'Research', desc: 'Over 2–3 weeks, you develop a research question, review the literature, structure your argument, and draft your paper — guided at every step.' },
+          { step: '04', title: 'Review & edit', desc: 'Your paper goes through an editorial review process. Your mentor and our editorial team work with you to refine your argument and prose.' },
+          { step: '05', title: 'Publish', desc: 'Your finished research is published on Economic Sentinel under your own name. A real byline, a real credential, a real contribution to the field.' },
+        ].map((item) => (
+          <div class="timeline__item" data-reveal>
+            <span class="timeline__step">{item.step}</span>
+            <div class="timeline__content">
+              <h3 class="timeline__title">{item.title}</h3>
+              <p class="timeline__desc">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- What you gain -->
+  <section class="section gains-section">
+    <div class="container">
+      <div class="gains-panel" data-reveal>
+        <header>
+          <p class="eyebrow">What interns gain</p>
+          <h2>More than a certificate.</h2>
+        </header>
+        <div class="gains-grid">
+          {[
+            { title: 'A published paper', desc: 'Original research published under your name on economicsentinel.org — a tangible credential for university applications and beyond.' },
+            { title: 'One-to-one mentorship', desc: 'Direct guidance from a mentor at a leading Pakistani university. Not a lecture series — a working relationship.' },
+            { title: 'Research skills', desc: 'Learn to form a hypothesis, review literature, structure an argument, and write with clarity. Skills that compound for life.' },
+            { title: 'A network', desc: "Join a cohort of ambitious young researchers and a growing alumni community across Pakistan's economics ecosystem." },
+          ].map((g) => (
+            <div class="gain">
+              <h3 class="gain__title">{g.title}</h3>
+              <p class="gain__desc">{g.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Eligibility -->
+  <section class="section">
+    <div class="container eligibility-container">
+      <div class="eligibility" data-reveal>
+        <p class="eyebrow">Eligibility</p>
+        <h2>Who should apply?</h2>
+        <ul class="eligibility-list" role="list">
+          <li><span class="pillar__dot" aria-hidden="true"></span>Students aged 15–25, anywhere in Pakistan</li>
+          <li><span class="pillar__dot" aria-hidden="true"></span>No prior research experience required</li>
+          <li><span class="pillar__dot" aria-hidden="true"></span>Strong interest in economics, finance, or business</li>
+          <li><span class="pillar__dot" aria-hidden="true"></span>Willingness to commit 2–3 weeks of focused effort</li>
+          <li><span class="pillar__dot" aria-hidden="true"></span>Proficiency in English (writing)</li>
+        </ul>
+        <p class="text-muted eligibility-note">
+          We review applications holistically. We care about curiosity and ambition, not grades or pedigree.
+        </p>
+      </div>
+      <div class="mentor-note" data-reveal>
+        <div class="mentor-note__inner">
+          <p class="eyebrow">A note on mentorship</p>
+          <p class="mentor-note__text">
+            Every intern is paired with a mentor — a university student from institutions
+            like LUMS, IBA, NUST, GCU, or QAU — who has walked the path themselves. Our
+            mentors aren't professors delivering lectures. They're near-peers who guide
+            you through the messiness of real research with empathy and rigor.
+          </p>
+          <p class="mentor-note__text text-muted">
+            This is what makes the program work: mentorship by people close enough to your
+            experience to understand the struggle, and accomplished enough to help you through it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="section cta-final">
+    <div class="container">
+      <div class="cta-final__panel" data-reveal>
+        <p class="eyebrow">Applications opening soon</p>
+        <h2 class="cta-final__title">Ready to write research that matters?</h2>
+        <p class="lead cta-final__lead">
+          The next cohort of the Economic Sentinel Research Internship is forming now.
+          It's mentored, it's structured, and it ends with your name on a published paper.
+        </p>
+        <button type="button" class="btn btn-primary" data-open-coming-soon>
+          Apply to the Research Internship <span class="arrow" aria-hidden="true">→</span>
+        </button>
+        <p class="cta-final__fine text-muted">
+          Remote-friendly across Pakistan · Mentored by top-university students
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Coming Soon Modal -->
+  <div class="modal-overlay" data-modal hidden>
+    <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+      <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
+      <div class="modal__icon" aria-hidden="true">
+        <span class="modal__pulse"></span>
+      </div>
+      <h2 id="modal-title" class="modal__title">Applications opening soon</h2>
+      <p class="modal__text">
+        The next cohort of the Research Internship is being finalised. We'll
+        announce applications on our socials — follow us to be the first to know.
+      </p>
+      <div class="modal__actions">
+        <a href="/join" class="btn btn-primary">
+          Join the team instead <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <button type="button" class="btn btn-ghost" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  import { initScroll } from '../scripts/scroll-reveal';
+  initScroll();
+
+  const modal = document.querySelector<HTMLElement>('[data-modal]');
+  const openers = document.querySelectorAll('[data-open-coming-soon]');
+  const closers = document.querySelectorAll('[data-close-modal]');
+
+  const setModal = (open: boolean) => {
+    if (!modal) return;
+    modal.hidden = !open;
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      const first = modal.querySelector<HTMLElement>('[data-close-modal], a, button');
+      first?.focus();
+    }
+  };
+
+  openers.forEach((b) => b.addEventListener('click', () => setModal(true)));
+  closers.forEach((b) => b.addEventListener('click', () => setModal(false)));
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) setModal(false);
+  });
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setModal(false);
+  });
+</script>
+
+<style>
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  /* Overview */
+  .overview-grid {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+  .overview-text h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1.25rem;
+  }
+  .overview-text .lead {
+    color: var(--es-cream);
+    opacity: 0.9;
+    margin-bottom: 1rem;
+  }
+  .overview-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .overview-stat {
+    border-left: 1px solid var(--es-line);
+    padding-left: 1.25rem;
+  }
+  .overview-stat__value {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1;
+    font-weight: 500;
+    display: block;
+  }
+  .overview-stat__label {
+    margin-top: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+    display: block;
+  }
+
+  @media (min-width: 880px) {
+    .overview-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+      align-items: center;
+    }
+  }
+
+  /* Modules */
+  .modules-section header {
+    margin-bottom: var(--space-12);
+  }
+  .modules-section h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 0.5rem;
+  }
+  .modules-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  .module-card {
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background: linear-gradient(180deg, var(--es-surface), rgba(18, 26, 36, 0.55));
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    transition: transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 0% 0%, rgba(227, 177, 103, 0.1), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+  .module-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(227, 177, 103, 0.35);
+    box-shadow: var(--shadow-soft);
+  }
+  .module-card:hover::before { opacity: 1; }
+  .module-card__no {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--es-gold);
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 1.25rem;
+  }
+  .module-card__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.75rem;
+  }
+  .module-card__desc {
+    color: var(--es-muted);
+    margin-bottom: 1.25rem;
+  }
+  .module-card__topics {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: var(--fs-small);
+  }
+  .module-card__topics li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--es-cream);
+  }
+  .pillar__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--es-gold);
+    flex: none;
+  }
+
+  @media (min-width: 720px) {
+    .modules-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  /* Timeline */
+  #timeline header {
+    margin-bottom: var(--space-12);
+  }
+  #timeline h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 0;
+  }
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .timeline__item {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1.75rem 0;
+    border-bottom: 1px solid var(--es-line);
+  }
+  .timeline__item:first-child {
+    border-top: 1px solid var(--es-line);
+  }
+  .timeline__step {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--es-gold);
+    flex: none;
+    width: 3rem;
+    line-height: 1;
+    padding-top: 0.15rem;
+  }
+  .timeline__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.35rem;
+  }
+  .timeline__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-body);
+    max-width: 52ch;
+  }
+
+  /* Gains */
+  .gains-section {
+    background: var(--es-surface);
+    border-top: 1px solid var(--es-line);
+    border-bottom: 1px solid var(--es-line);
+  }
+  .gains-panel header {
+    margin-bottom: var(--space-8);
+  }
+  .gains-panel h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 0;
+  }
+  .gains-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .gain {
+    padding: 1.5rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius);
+    background: var(--es-base);
+  }
+  .gain__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    color: var(--es-gold-light);
+  }
+  .gain__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 720px) {
+    .gains-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* Eligibility */
+  .eligibility-container {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+  .eligibility h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1.5rem;
+  }
+  .eligibility-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .eligibility-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--fs-body);
+  }
+  .eligibility-note {
+    font-size: var(--fs-small);
+  }
+  .mentor-note__inner {
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 100% at 100% 0%, rgba(227, 177, 103, 0.08), transparent 55%),
+      var(--es-surface);
+  }
+  .mentor-note__text {
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 880px) {
+    .eligibility-container {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+  }
+
+  /* Final CTA */
+  .cta-final__panel {
+    text-align: center;
+    padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+    border: 1px solid rgba(227, 177, 103, 0.28);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 140% at 50% -20%, rgba(227, 177, 103, 0.14), transparent 55%),
+      linear-gradient(180deg, var(--es-surface), var(--es-base));
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-final__panel .eyebrow {
+    justify-content: center;
+  }
+  .cta-final__panel .eyebrow::before { display: none; }
+  .cta-final__title {
+    font-size: var(--fs-h1);
+    margin: 1rem auto 1.25rem;
+    max-width: 18ch;
+  }
+  .cta-final__lead {
+    max-width: 52ch;
+    margin: 0 auto 2rem;
+    color: var(--es-cream);
+    opacity: 0.85;
+  }
+  .cta-final__fine {
+    margin-top: 1.5rem;
+    font-size: var(--fs-small);
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    background: rgba(10, 15, 22, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+  }
+  .modal-overlay[hidden] {
+    display: none;
+  }
+  .modal {
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    padding: clamp(2rem, 5vw, 3rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(227, 177, 103, 0.3);
+    background:
+      radial-gradient(120% 120% at 50% -20%, rgba(227, 177, 103, 0.12), transparent 55%),
+      var(--es-surface);
+    text-align: center;
+  }
+  .modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: 0;
+    color: var(--es-muted);
+    font-size: 1.5rem;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .modal__close:hover {
+    color: var(--es-cream);
+  }
+  .modal__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .modal__pulse {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--es-gold);
+    box-shadow: 0 0 0 0 rgba(227, 177, 103, 0.6);
+    animation: pulse 2s var(--ease-in-out) infinite;
+  }
+  @keyframes pulse {
+    70% { box-shadow: 0 0 0 10px rgba(227, 177, 103, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(227, 177, 103, 0); }
+  }
+  .modal__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.75rem;
+  }
+  .modal__text {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    margin-bottom: 1.5rem;
+    line-height: 1.55;
+  }
+  .modal__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .modal__pulse { animation: none; }
+  }
+</style>

@@ -1,0 +1,714 @@
+---
+import Layout from '../layouts/Layout.astro';
+const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024';
+---
+
+<Layout
+  title="Dashboard — Economic Sentinel"
+  description=""
+>
+  <section class="dash">
+    <div class="container dash__inner">
+      <!-- Gate -->
+      <div class="gate" data-gate>
+        <div class="gate__card">
+          <img src="/logo.png" alt="" width="56" height="56" class="gate__logo" />
+          <h1 class="gate__title">Sentinel Control</h1>
+          <p class="gate__sub text-muted">Enter the dashboard passcode to continue.</p>
+          <form class="gate__form" data-gate-form>
+            <input
+              type="password"
+              class="form-input gate__input"
+              placeholder="Passcode"
+              data-gate-input
+              autocomplete="off"
+              required
+            />
+            <button type="submit" class="btn btn-primary gate__btn">Enter</button>
+          </form>
+          <p class="gate__error" hidden data-gate-error>Wrong passcode.</p>
+        </div>
+      </div>
+
+      <!-- Dashboard (hidden until authed) -->
+      <div class="dashboard" hidden data-dashboard data-pc={dashPasscode}>
+        <header class="dash__header">
+          <div>
+            <p class="eyebrow">Sentinel Control</p>
+            <h1 class="dash__title">Submissions Dashboard</h1>
+          </div>
+          <div class="dash__actions">
+            <a href="/keystatic" class="btn btn-ghost dash__keystatic">
+              Open CMS <span class="arrow" aria-hidden="true">→</span>
+            </a>
+            <button class="btn btn-ghost" data-logout>Log out</button>
+          </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="dash__stats" data-stats></div>
+
+        <!-- Tabs -->
+        <div class="dash__tabs">
+          <button class="tab is-active" data-tab="join">Join Applications</button>
+          <button class="tab" data-tab="internship">Internship Applications</button>
+        </div>
+
+        <!-- Tables -->
+        <div class="dash__table-wrap">
+          <div data-panel="join">
+            <div class="table-controls">
+              <select class="form-input table-filter" data-filter-join>
+                <option value="all">All statuses</option>
+                <option value="new">New</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="accepted">Accepted</option>
+                <option value="declined">Declined</option>
+              </select>
+              <button class="btn btn-ghost table-export" data-export="join">Export CSV</button>
+            </div>
+            <div class="table-scroll">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Institution</th>
+                    <th>Help with</th>
+                    <th>Hours</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody data-tbody-join></tbody>
+              </table>
+            </div>
+            <p class="table-empty" hidden data-empty-join>No applications yet.</p>
+          </div>
+
+          <div hidden data-panel="internship">
+            <div class="table-controls">
+              <select class="form-input table-filter" data-filter-intern>
+                <option value="all">All statuses</option>
+                <option value="new">New</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="accepted">Accepted</option>
+                <option value="declined">Declined</option>
+              </select>
+              <button class="btn btn-ghost table-export" data-export="internship">Export CSV</button>
+            </div>
+            <div class="table-scroll">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Module</th>
+                    <th>Location</th>
+                    <th>Fee waiver</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody data-tbody-intern></tbody>
+              </table>
+            </div>
+            <p class="table-empty" hidden data-empty-intern>No applications yet.</p>
+          </div>
+        </div>
+
+        <!-- Detail modal -->
+        <div class="detail-overlay" hidden data-detail>
+          <div class="detail-card" role="dialog" aria-modal="true">
+            <button class="modal__close" data-detail-close aria-label="Close">&times;</button>
+            <div data-detail-content></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const PASSCODE_KEY = 'es_dash_auth';
+  const CORRECT = document.querySelector<HTMLElement>('[data-dashboard]')?.dataset.pc ?? 'sentinel2024';
+
+  let supabase: any = null;
+  async function getSupa() {
+    if (!supabase) {
+      const mod = await import('../lib/supabase');
+      supabase = mod.supabase;
+    }
+    return supabase;
+  }
+
+  // Elements
+  const gate = document.querySelector<HTMLElement>('[data-gate]')!;
+  const dashboard = document.querySelector<HTMLElement>('[data-dashboard]')!;
+  const gateForm = document.querySelector<HTMLFormElement>('[data-gate-form]')!;
+  const gateInput = document.querySelector<HTMLInputElement>('[data-gate-input]')!;
+  const gateError = document.querySelector<HTMLElement>('[data-gate-error]')!;
+  const statsEl = document.querySelector<HTMLElement>('[data-stats]')!;
+  const tbodyJoin = document.querySelector<HTMLTableSectionElement>('[data-tbody-join]')!;
+  const tbodyIntern = document.querySelector<HTMLTableSectionElement>('[data-tbody-intern]')!;
+  const emptyJoin = document.querySelector<HTMLElement>('[data-empty-join]')!;
+  const emptyIntern = document.querySelector<HTMLElement>('[data-empty-intern]')!;
+  const detailOverlay = document.querySelector<HTMLElement>('[data-detail]')!;
+  const detailContent = document.querySelector<HTMLElement>('[data-detail-content]')!;
+
+  // Auth gate
+  function unlock() {
+    gate.hidden = true;
+    dashboard.hidden = false;
+    sessionStorage.setItem(PASSCODE_KEY, '1');
+    loadData();
+  }
+
+  if (sessionStorage.getItem(PASSCODE_KEY) === '1') unlock();
+
+  gateForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (gateInput.value === CORRECT) {
+      unlock();
+    } else {
+      gateError.hidden = false;
+      gateInput.value = '';
+      gateInput.focus();
+    }
+  });
+
+  document.querySelector('[data-logout]')?.addEventListener('click', () => {
+    sessionStorage.removeItem(PASSCODE_KEY);
+    location.reload();
+  });
+
+  // Tabs
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-tab]');
+  const panels = document.querySelectorAll<HTMLElement>('[data-panel]');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+      panels.forEach((p) => { p.hidden = p.dataset.panel !== tab.dataset.tab; });
+    });
+  });
+
+  // Data
+  let joinData: any[] = [];
+  let internData: any[] = [];
+
+  async function loadData() {
+    const sb = await getSupa();
+    const [joinRes, internRes] = await Promise.all([
+      sb.from('join_applications').select('*').order('created_at', { ascending: false }),
+      sb.from('internship_applications').select('*').order('created_at', { ascending: false }),
+    ]);
+    joinData = joinRes.data ?? [];
+    internData = internRes.data ?? [];
+    renderStats();
+    renderTable('join');
+    renderTable('internship');
+  }
+
+  function renderStats() {
+    const newJoin = joinData.filter((r) => r.status === 'new').length;
+    const newIntern = internData.filter((r) => r.status === 'new').length;
+    statsEl.innerHTML = `
+      <div class="stat-card"><span class="stat-card__val">${joinData.length}</span><span class="stat-card__label">Join applications</span></div>
+      <div class="stat-card"><span class="stat-card__val">${internData.length}</span><span class="stat-card__label">Internship applications</span></div>
+      <div class="stat-card stat-card--gold"><span class="stat-card__val">${newJoin + newIntern}</span><span class="stat-card__label">Unreviewed</span></div>
+    `;
+  }
+
+  function fmtDate(d: string) {
+    return new Date(d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function statusBadge(s: string) {
+    const cls = s === 'new' ? 'badge--new' : s === 'accepted' ? 'badge--accepted' : s === 'declined' ? 'badge--declined' : 'badge--reviewed';
+    return `<span class="badge ${cls}">${s}</span>`;
+  }
+
+  function renderTable(type: 'join' | 'internship') {
+    const data = type === 'join' ? joinData : internData;
+    const tbody = type === 'join' ? tbodyJoin : tbodyIntern;
+    const empty = type === 'join' ? emptyJoin : emptyIntern;
+    const filterEl = document.querySelector<HTMLSelectElement>(type === 'join' ? '[data-filter-join]' : '[data-filter-intern]');
+    const filter = filterEl?.value ?? 'all';
+
+    const filtered = filter === 'all' ? data : data.filter((r) => r.status === filter);
+    empty.hidden = filtered.length > 0;
+
+    if (type === 'join') {
+      tbody.innerHTML = filtered.map((r) => `
+        <tr>
+          <td>${fmtDate(r.created_at)}</td>
+          <td><strong>${esc(r.name)}</strong></td>
+          <td>${esc(r.email)}</td>
+          <td>${esc(r.institution)}</td>
+          <td>${(r.help_with || []).join(', ')}</td>
+          <td>${esc(r.hours)}</td>
+          <td>${statusBadge(r.status)}</td>
+          <td><button class="btn-link" data-view-join="${r.id}">View</button></td>
+        </tr>
+      `).join('');
+    } else {
+      tbody.innerHTML = filtered.map((r) => `
+        <tr>
+          <td>${fmtDate(r.created_at)}</td>
+          <td><strong>${esc(r.name)}</strong></td>
+          <td>${esc(r.email)}</td>
+          <td>${esc(r.module)}</td>
+          <td>${esc(r.location)}</td>
+          <td>${esc(r.fee_waiver)}</td>
+          <td>${statusBadge(r.status)}</td>
+          <td><button class="btn-link" data-view-intern="${r.id}">View</button></td>
+        </tr>
+      `).join('');
+    }
+
+    // View buttons
+    tbody.querySelectorAll('[data-view-join]').forEach((btn) => {
+      btn.addEventListener('click', () => showDetail('join', (btn as HTMLElement).dataset.viewJoin!));
+    });
+    tbody.querySelectorAll('[data-view-intern]').forEach((btn) => {
+      btn.addEventListener('click', () => showDetail('internship', (btn as HTMLElement).dataset.viewIntern!));
+    });
+  }
+
+  function esc(s: string) {
+    const d = document.createElement('div');
+    d.textContent = s ?? '';
+    return d.innerHTML;
+  }
+
+  // Filters
+  document.querySelector('[data-filter-join]')?.addEventListener('change', () => renderTable('join'));
+  document.querySelector('[data-filter-intern]')?.addEventListener('change', () => renderTable('internship'));
+
+  // Detail view
+  function showDetail(type: 'join' | 'internship', id: string) {
+    const data = type === 'join' ? joinData : internData;
+    const row = data.find((r) => r.id === id);
+    if (!row) return;
+
+    const fields = type === 'join'
+      ? [
+          ['Name', row.name], ['Email', row.email], ['WhatsApp', row.whatsapp],
+          ['Institution', row.institution], ['Help with', (row.help_with || []).join(', ')],
+          ['Why ES', row.why], ['Hours/week', row.hours], ['Available', row.available],
+          ['Portfolio', row.portfolio || '—'], ['Anything else', row.anything_else || '—'],
+        ]
+      : [
+          ['Name', row.name], ['Email', row.email], ['WhatsApp', row.whatsapp],
+          ['Location', row.location], ['Institution', row.institution], ['Module', row.module],
+          ['Why this module', row.why_module], ['Experience', row.experience || '—'],
+          ['Can commit', row.can_commit], ['Heard about us', row.hear_about || '—'],
+          ['Fee waiver', row.fee_waiver],
+        ];
+
+    detailContent.innerHTML = `
+      <h2 class="detail__name">${esc(row.name)}</h2>
+      <p class="detail__date">${fmtDate(row.created_at)} · ${statusBadge(row.status)}</p>
+      <div class="detail__fields">
+        ${fields.map(([label, val]) => `
+          <div class="detail__field">
+            <span class="detail__label">${label}</span>
+            <span class="detail__val">${esc(val as string)}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="detail__actions">
+        <label class="detail__status-label">Set status:
+          <select class="form-input detail__status-select" data-status-select>
+            ${['new', 'reviewed', 'accepted', 'declined'].map((s) =>
+              `<option value="${s}" ${row.status === s ? 'selected' : ''}>${s}</option>`
+            ).join('')}
+          </select>
+        </label>
+      </div>
+    `;
+
+    detailContent.querySelector('[data-status-select]')?.addEventListener('change', async (e) => {
+      const val = (e.target as HTMLSelectElement).value;
+      const table = type === 'join' ? 'join_applications' : 'internship_applications';
+      const sb = await getSupa();
+      await sb.from(table).update({ status: val }).eq('id', id);
+      row.status = val;
+      renderTable(type);
+      renderStats();
+      const badge = detailContent.querySelector('.detail__date');
+      if (badge) badge.innerHTML = `${fmtDate(row.created_at)} · ${statusBadge(val)}`;
+    });
+
+    detailOverlay.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+
+  detailOverlay.addEventListener('click', (e) => { if (e.target === detailOverlay) closeDetail(); });
+  document.querySelector('[data-detail-close]')?.addEventListener('click', closeDetail);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDetail(); });
+
+  function closeDetail() {
+    detailOverlay.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  // CSV export
+  document.querySelectorAll('[data-export]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const type = (btn as HTMLElement).dataset.export as string;
+      const data = type === 'join' ? joinData : internData;
+      if (!data.length) return;
+      const keys = Object.keys(data[0]).filter((k) => k !== 'id');
+      const csv = [keys.join(','), ...data.map((r) =>
+        keys.map((k) => {
+          let v = Array.isArray(r[k]) ? r[k].join('; ') : String(r[k] ?? '');
+          if (v.includes(',') || v.includes('"') || v.includes('\n')) v = `"${v.replace(/"/g, '""')}"`;
+          return v;
+        }).join(',')
+      )].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `${type}-applications-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    });
+  });
+</script>
+
+<style>
+  .dash {
+    min-height: 100svh;
+    padding-top: 6rem;
+    padding-bottom: 4rem;
+  }
+
+  /* Gate */
+  .gate {
+    display: grid;
+    place-items: center;
+    min-height: 60vh;
+  }
+  .gate__card {
+    text-align: center;
+    padding: 3rem 2.5rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background: var(--es-surface);
+    max-width: 400px;
+    width: 100%;
+  }
+  .gate__logo {
+    margin: 0 auto 1.5rem;
+    border-radius: 50%;
+  }
+  .gate__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.5rem;
+  }
+  .gate__sub {
+    font-size: var(--fs-small);
+    margin-bottom: 1.5rem;
+  }
+  .gate__form {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .gate__input {
+    flex: 1;
+  }
+  .gate__error {
+    margin-top: 0.75rem;
+    color: #f08080;
+    font-size: var(--fs-small);
+    font-weight: 600;
+  }
+
+  /* Dashboard header */
+  .dash__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: var(--space-8);
+  }
+  .dash__title {
+    font-size: var(--fs-h2);
+    margin-top: 0.5rem;
+  }
+  .dash__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .dash__keystatic {
+    --btn-pad-y: 0.6rem;
+    font-size: var(--fs-small);
+  }
+
+  /* Stats */
+  .dash__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: var(--space-8);
+  }
+  :global(.stat-card) {
+    padding: 1.25rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius);
+    background: var(--es-surface);
+    text-align: center;
+  }
+  :global(.stat-card--gold) {
+    border-color: rgba(227, 177, 103, 0.3);
+    background: radial-gradient(100% 100% at 50% 0%, rgba(227, 177, 103, 0.1), transparent 60%), var(--es-surface);
+  }
+  :global(.stat-card__val) {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--es-gold);
+  }
+  :global(.stat-card__label) {
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+    margin-top: 0.25rem;
+    display: block;
+  }
+
+  /* Tabs */
+  .dash__tabs {
+    display: flex;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--es-line);
+    margin-bottom: 1.25rem;
+  }
+  .tab {
+    padding: 0.75rem 1.25rem;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--dur) var(--ease-out);
+  }
+  .tab.is-active {
+    color: var(--es-gold);
+    border-bottom-color: var(--es-gold);
+  }
+  .tab:hover:not(.is-active) {
+    color: var(--es-cream);
+  }
+
+  /* Table controls */
+  .table-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  .table-filter {
+    max-width: 200px;
+    padding: 0.55rem 0.75rem;
+    font-size: var(--fs-small);
+  }
+  .table-export {
+    --btn-pad-y: 0.5rem;
+    --btn-pad-x: 1rem;
+    font-size: 0.8rem;
+    margin-left: auto;
+  }
+
+  /* Table */
+  .table-scroll {
+    overflow-x: auto;
+  }
+  .dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-small);
+    white-space: nowrap;
+  }
+  .dash-table th {
+    text-align: left;
+    padding: 0.75rem 0.75rem;
+    font-weight: 600;
+    color: var(--es-muted);
+    border-bottom: 1px solid var(--es-line);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .dash-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--es-line);
+    color: var(--es-cream);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dash-table tr:hover td {
+    background: rgba(227, 177, 103, 0.04);
+  }
+  :global(.btn-link) {
+    background: none;
+    border: none;
+    color: var(--es-gold);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    transition: color var(--dur) var(--ease-out);
+  }
+  :global(.btn-link:hover) {
+    color: var(--es-gold-light);
+  }
+  .table-empty {
+    text-align: center;
+    color: var(--es-muted);
+    padding: var(--space-8) 0;
+  }
+
+  /* Badges */
+  :global(.badge) {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  :global(.badge--new) {
+    background: rgba(227, 177, 103, 0.15);
+    color: var(--es-gold);
+  }
+  :global(.badge--reviewed) {
+    background: rgba(138, 148, 166, 0.15);
+    color: var(--es-muted);
+  }
+  :global(.badge--accepted) {
+    background: rgba(80, 200, 120, 0.15);
+    color: #50c878;
+  }
+  :global(.badge--declined) {
+    background: rgba(220, 60, 60, 0.12);
+    color: #f08080;
+  }
+
+  /* Detail overlay */
+  .detail-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    background: rgba(10, 15, 22, 0.8);
+    backdrop-filter: blur(8px);
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+    overflow-y: auto;
+  }
+  .detail-overlay[hidden] { display: none; }
+  .detail-card {
+    position: relative;
+    max-width: 600px;
+    width: 100%;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+  }
+  :global(.detail__name) {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.25rem;
+  }
+  :global(.detail__date) {
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  :global(.detail__fields) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+  :global(.detail__field) {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--es-line);
+  }
+  :global(.detail__label) {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--es-muted);
+  }
+  :global(.detail__val) {
+    font-size: var(--fs-small);
+    color: var(--es-cream);
+    white-space: pre-wrap;
+  }
+  :global(.detail__actions) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  :global(.detail__status-label) {
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--es-muted);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  :global(.detail__status-select) {
+    max-width: 160px;
+    padding: 0.4rem 0.6rem;
+    font-size: var(--fs-small);
+  }
+  .modal__close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: transparent;
+    border: 0;
+    color: var(--es-muted);
+    font-size: 1.5rem;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+  .modal__close:hover { color: var(--es-cream); }
+
+  .form-input {
+    padding: 0.65rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    color: var(--es-cream);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--es-gold);
+    box-shadow: 0 0 0 3px rgba(227, 177, 103, 0.15);
+  }
+</style>

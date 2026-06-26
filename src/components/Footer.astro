@@ -1,0 +1,136 @@
+---
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+
+const columns = [
+  {
+    title: 'Organization',
+    links: [
+      { label: 'About', href: '/about' },
+      { label: 'Journal', href: '/research' },
+      { label: 'Internship', href: '/internship' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Connect',
+    links: [
+      { label: 'LinkedIn', href: '#' },
+      { label: 'Instagram', href: '#' },
+      { label: 'X / Twitter', href: '#' },
+      { label: 'hello@economicsentinel.org', href: 'mailto:hello@economicsentinel.org' },
+    ],
+  },
+];
+---
+
+<footer class="footer">
+  <div class="container container-wide">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Logo size={44} />
+        <p class="footer__mission">
+          Bridging the gap between financial literacy and the next generation —
+          empowering young people through seminars, student research, and mentored programs across Pakistan.
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Footer">
+        {columns.map((col) => (
+          <div class="footer__col">
+            <h3 class="footer__col-title">{col.title}</h3>
+            <ul role="list">
+              {col.links.map((l) => (
+                <li><a href={l.href} class="footer__link">{l.label}</a></li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+
+    <hr class="hr" />
+
+    <div class="footer__bottom">
+      <p>© {year} Economic Sentinel. Youth-led economics research, Pakistan.</p>
+      <p class="footer__credo">Find your bearing. Read the economy.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding-block: var(--space-24) var(--space-12);
+    border-top: 1px solid var(--es-line);
+    background:
+      radial-gradient(800px 400px at 100% 0%, rgba(227, 177, 103, 0.06), transparent 70%),
+      var(--es-base);
+  }
+  .footer__top {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+  .footer__brand {
+    max-width: 30rem;
+  }
+  .footer__mission {
+    margin-top: 1.25rem;
+    color: var(--es-muted);
+    font-size: var(--fs-body);
+  }
+  .footer__nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8);
+  }
+  .footer__col-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-eyebrow);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--es-gold);
+    margin-bottom: 1.1rem;
+  }
+  .footer__col ul {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  .footer__link {
+    color: var(--es-muted);
+    font-size: 0.95rem;
+    transition: color var(--dur) var(--ease-out), padding-left var(--dur) var(--ease-out);
+  }
+  .footer__link:hover {
+    color: var(--es-gold-light);
+    padding-left: 4px;
+  }
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-top: var(--space-8);
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+  }
+  .footer__credo {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--es-gold);
+  }
+
+  @media (min-width: 760px) {
+    .footer__top {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: start;
+    }
+    .footer__nav {
+      justify-items: end;
+    }
+  }
+</style>

@@ -1,0 +1,258 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((article) => ({
+    params: { slug: article.id },
+    props: { article },
+  }));
+}
+
+const { article } = Astro.props;
+const { Content } = await render(article);
+
+const words = (article.body ?? '').trim().split(/\s+/).length;
+const readTime = `${Math.max(1, Math.ceil(words / 250))} min read`;
+
+const formattedDate = new Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+}).format(new Date(article.data.date));
+---
+
+<Layout
+  title={`${article.data.title} — Economic Sentinel`}
+  description={article.data.excerpt}
+>
+  <article class="article">
+    <header class="article__header">
+      <div class="container article__header-inner">
+        <a href="/research" class="article__back" data-reveal>
+          <span aria-hidden="true">←</span> Back to research
+        </a>
+        <span class="article__tag" data-reveal>{article.data.category}</span>
+        <h1 class="article__title" data-reveal>{article.data.title}</h1>
+        <p class="article__excerpt lead" data-reveal>{article.data.excerpt}</p>
+        <div class="article__meta" data-reveal>
+          <div class="article__author-block">
+            <div class="article__avatar" aria-hidden="true">
+              {article.data.author.charAt(0)}
+            </div>
+            <div>
+              <p class="article__author-name">{article.data.author}</p>
+              <p class="article__author-role">{article.data.authorRole}</p>
+            </div>
+          </div>
+          <div class="article__info">
+            <span>{formattedDate}</span>
+            <span class="article__dot" aria-hidden="true"></span>
+            <span>{readTime}</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container article__container">
+      <div class="prose" data-reveal>
+        <Content />
+      </div>
+    </div>
+
+    <footer class="article__footer">
+      <div class="container">
+        <hr class="hr" />
+        <div class="article__cta" data-reveal>
+          <div>
+            <h3>Interested in writing research like this?</h3>
+            <p class="text-muted">Our Research Internship is free, mentored, and open to students across Pakistan.</p>
+          </div>
+          <a href="/internship" class="btn btn-primary">
+            Apply now <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+</Layout>
+
+<script>
+  import { initScroll } from '../../scripts/scroll-reveal';
+  initScroll();
+</script>
+
+<style>
+  .article__header {
+    padding-top: 9rem;
+    padding-bottom: var(--space-12);
+    background: var(--es-grad-radial);
+    border-bottom: 1px solid var(--es-line);
+  }
+  .article__header-inner {
+    max-width: 760px;
+  }
+  .article__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+    margin-bottom: 1.5rem;
+    transition: color var(--dur) var(--ease-out);
+  }
+  .article__back:hover {
+    color: var(--es-gold);
+  }
+  .article__tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--es-gold);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-pill);
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1.25rem;
+  }
+  .article__title {
+    font-size: var(--fs-h1);
+    line-height: var(--lh-snug);
+    max-width: 22ch;
+  }
+  .article__excerpt {
+    margin-top: 1rem;
+  }
+  .article__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--es-line);
+  }
+  .article__author-block {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .article__avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--es-surface);
+    border: 1px solid var(--es-line);
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--es-gold);
+  }
+  .article__author-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .article__author-role {
+    font-size: 0.8rem;
+    color: var(--es-muted);
+  }
+  .article__info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--es-muted);
+  }
+  .article__dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--es-muted);
+  }
+
+  .article__container {
+    max-width: 760px;
+    padding-block: var(--section-y);
+  }
+
+  /* Prose styles for Markdown content */
+  .prose :global(h2) {
+    font-size: var(--fs-h3);
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--es-cream);
+  }
+  .prose :global(h3) {
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    color: var(--es-cream);
+  }
+  .prose :global(p) {
+    margin-bottom: 1.25rem;
+    color: var(--es-cream);
+    opacity: 0.9;
+  }
+  .prose :global(ul),
+  .prose :global(ol) {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+  }
+  .prose :global(li) {
+    margin-bottom: 0.5rem;
+    color: var(--es-cream);
+    opacity: 0.9;
+  }
+  .prose :global(strong) {
+    color: var(--es-gold-light);
+    font-weight: 600;
+  }
+  .prose :global(em) {
+    font-style: italic;
+    color: var(--es-muted);
+  }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--es-gold);
+    padding-left: 1.25rem;
+    margin: 1.5rem 0;
+    color: var(--es-muted);
+    font-style: italic;
+  }
+  .prose :global(hr) {
+    height: 1px;
+    background: var(--es-line);
+    border: 0;
+    margin: 2.5rem 0;
+  }
+  .prose :global(a) {
+    color: var(--es-gold);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color var(--dur) var(--ease-out);
+  }
+  .prose :global(a:hover) {
+    color: var(--es-gold-light);
+  }
+
+  .article__footer {
+    padding-bottom: var(--space-16);
+  }
+  .article__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: var(--space-8);
+    max-width: 760px;
+    margin-inline: auto;
+  }
+  .article__cta h3 {
+    font-size: var(--fs-h3);
+  }
+</style>

@@ -1,0 +1,237 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+  { label: 'Journal', href: '/research' },
+  { label: 'Internship', href: '/internship' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const path = Astro.url.pathname;
+---
+
+<header class="nav" data-nav>
+  <div class="container container-wide nav__inner">
+    <Logo size={42} />
+
+    <nav class="nav__links" aria-label="Primary">
+      {links.map((l) => (
+        <a
+          href={l.href}
+          class="nav__link"
+          aria-current={path === l.href ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="nav__cta">
+      <a href="/join" class="btn btn-primary nav__apply">
+        Join Us
+        <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    <button
+      class="nav__burger"
+      aria-label="Open menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      data-burger
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div class="nav__mobile" id="mobile-menu" data-mobile hidden>
+    <nav aria-label="Mobile">
+      {links.map((l) => (
+        <a href={l.href} class="nav__mobile-link">{l.label}</a>
+      ))}
+      <a href="/join" class="btn btn-primary nav__mobile-apply">
+        Join Us <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const nav = document.querySelector('[data-nav]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const mobile = document.querySelector<HTMLElement>('[data-mobile]');
+
+  // Solidify nav background once the user scrolls past the hero top.
+  const onScroll = () => {
+    if (window.scrollY > 24) nav?.classList.add('is-scrolled');
+    else nav?.classList.remove('is-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Mobile menu toggle.
+  const setOpen = (open: boolean) => {
+    if (!burger || !mobile) return;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    burger.classList.toggle('is-open', open);
+    mobile.toggleAttribute('hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  burger?.addEventListener('click', () => {
+    setOpen(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  mobile?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => setOpen(false))
+  );
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: var(--z-nav);
+    transition: background-color var(--dur) var(--ease-out),
+      backdrop-filter var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out);
+    border-bottom: 1px solid transparent;
+  }
+  .nav.is-scrolled {
+    background: rgba(10, 15, 22, 0.72);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border-bottom-color: var(--es-line);
+  }
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 5rem;
+  }
+  .nav__links {
+    display: none;
+    align-items: center;
+    gap: 0.35rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+  }
+  .nav__link {
+    position: relative;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.95rem;
+    color: var(--es-cream);
+    border-radius: var(--radius-pill);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.25rem;
+    height: 1px;
+    background: var(--es-gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease-out);
+  }
+  .nav__link:hover {
+    color: var(--es-gold-light);
+  }
+  .nav__link:hover::after,
+  .nav__link[aria-current='page']::after {
+    transform: scaleX(1);
+  }
+  .nav__link[aria-current='page'] {
+    color: var(--es-gold);
+  }
+  .nav__cta {
+    display: none;
+  }
+  .nav__apply {
+    --btn-pad-y: 0.6rem;
+    --btn-pad-x: 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  /* Burger */
+  .nav__burger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-sm);
+    margin-left: auto;
+  }
+  .nav__burger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--es-cream);
+    border-radius: 2px;
+    transition: transform var(--dur) var(--ease-out),
+      opacity var(--dur) var(--ease-out);
+  }
+  .nav__burger.is-open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav__burger.is-open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__burger.is-open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .nav__mobile {
+    border-top: 1px solid var(--es-line);
+    background: rgba(10, 15, 22, 0.96);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 1.25rem var(--gutter) 2rem;
+  }
+  .nav__mobile nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    max-width: var(--container);
+    margin-inline: auto;
+  }
+  .nav__mobile-link {
+    padding: 1rem 0.25rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--es-line);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .nav__mobile-link:hover {
+    color: var(--es-gold);
+  }
+  .nav__mobile-apply {
+    margin-top: 1.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .nav__links {
+      display: flex;
+    }
+    .nav__cta {
+      display: block;
+    }
+    .nav__burger,
+    .nav__mobile {
+      display: none;
+    }
+  }
+</style>

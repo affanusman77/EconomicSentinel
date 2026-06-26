@@ -1,0 +1,160 @@
+---
+const icons: Record<string, string> = {
+  mic: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17 10V8A5 5 0 0 0 7 8v2"/><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M12 14v3"/><circle cx="12" cy="5" r="1"/></svg>`,
+  doc: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>`,
+  compass: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></svg>`,
+};
+
+const pillars = [
+  {
+    no: '01',
+    title: 'Seminars',
+    body:
+      'We host seminars that translate economics into language young people actually use — building financial literacy and empowering the next generation to navigate their own economic futures.',
+    points: ['Interactive sessions', 'Expert-led discussions', 'Open to all students'],
+    icon: 'mic',
+  },
+  {
+    no: '02',
+    title: 'Student Research & Articles',
+    body:
+      'We publish original, rigorously edited research and articles written by students — turning curiosity about markets, policy and money into work the world can cite.',
+    points: ['Peer-style review', 'Editorial mentorship', 'A public byline'],
+    icon: 'doc',
+  },
+  {
+    no: '03',
+    title: 'Research Internship',
+    body:
+      "A structured internship in economics, finance and business — interns are guided by mentors from Pakistan's leading universities, end-to-end.",
+    points: ['Cohort-based', 'One-to-one mentorship', 'A finished paper'],
+    icon: 'compass',
+  },
+];
+---
+
+<section class="section pillars" id="pillars">
+  <div class="container">
+    <header class="pillars__head" data-reveal>
+      <p class="eyebrow">What we do</p>
+      <h2 class="pillars__title">
+        Three pillars building a more <span class="text-gold">financially literate</span> generation.
+      </h2>
+    </header>
+
+    <div class="pillars__grid">
+      {pillars.map((p, i) => (
+        <article class="pillar" data-reveal style={`--i:${i}`}>
+          <div class="pillar__top">
+            <span class="pillar__no">{p.no}</span>
+            <span class="pillar__icon" aria-hidden="true" set:html={icons[p.icon]} />
+          </div>
+          <h3 class="pillar__title">{p.title}</h3>
+          <p class="pillar__body">{p.body}</p>
+          <ul class="pillar__points" role="list">
+            {p.points.map((pt) => (
+              <li><span class="pillar__dot" aria-hidden="true"></span>{pt}</li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars__head {
+    max-width: 36rem;
+    margin-bottom: var(--space-12);
+  }
+  .pillars__title {
+    font-size: var(--fs-h2);
+    margin-top: 1rem;
+  }
+  .pillars__grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  .pillar {
+    position: relative;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    background: linear-gradient(180deg, var(--es-surface), rgba(18, 26, 36, 0.55));
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: transform var(--dur) var(--ease-out),
+      border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .pillar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 0% 0%, rgba(227, 177, 103, 0.12), transparent 55%);
+    opacity: 0;
+    transition: opacity var(--dur) var(--ease-out);
+  }
+  .pillar:hover {
+    transform: translateY(-6px);
+    border-color: rgba(227, 177, 103, 0.4);
+    box-shadow: var(--shadow-soft);
+  }
+  .pillar:hover::before {
+    opacity: 1;
+  }
+  .pillar__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  .pillar__no {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--es-gold);
+    letter-spacing: 0.1em;
+  }
+  .pillar__icon :global(svg) {
+    width: 30px;
+    height: 30px;
+    stroke: var(--es-gold);
+    fill: none;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .pillar__title {
+    font-size: var(--fs-h3);
+    margin-bottom: 0.75rem;
+  }
+  .pillar__body {
+    color: var(--es-muted);
+    margin-bottom: 1.5rem;
+  }
+  .pillar__points {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: var(--fs-small);
+  }
+  .pillar__points li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--es-cream);
+  }
+  .pillar__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--es-gold);
+    flex: none;
+  }
+
+  @media (min-width: 720px) {
+    .pillars__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

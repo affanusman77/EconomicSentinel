@@ -1,0 +1,81 @@
+---
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/inter';
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Set false on inner/stub pages that don't need the gold ambient wash. */
+  ambient?: boolean;
+}
+
+const {
+  title = 'Economic Sentinel — Youth reshaping economic futures',
+  description =
+    'Economic Sentinel is a youth-led economics research organization from Pakistan. We publish student research and run a free, mentored research internship in economics, finance and business.',
+  ambient = true,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="theme-color" content="#0A0F16" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Economic Sentinel" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Flip the no-js flag as early as possible to avoid a flash -->
+    <script is:inline>
+      document.documentElement.classList.remove('no-js');
+    </script>
+  </head>
+  <body data-ambient={ambient ? 'on' : 'off'}>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <div class="grain" aria-hidden="true"></div>
+    <Navbar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <style>
+      .skip-link {
+        position: absolute;
+        left: 50%;
+        top: -100px;
+        transform: translateX(-50%);
+        z-index: var(--z-overlay);
+        background: var(--es-gold);
+        color: var(--es-base);
+        padding: 0.7rem 1.2rem;
+        border-radius: var(--radius-pill);
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: top var(--dur) var(--ease-out);
+      }
+      .skip-link:focus {
+        top: 1rem;
+      }
+    </style>
+  </body>
+</html>

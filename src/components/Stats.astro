@@ -1,0 +1,105 @@
+---
+const stats = [
+  { value: 1, suffix: '', label: 'Successful cohort', sub: 'Completed and published' },
+  { value: 25, suffix: '+', label: 'Interns mentored', sub: 'Across our research cohorts' },
+  { value: 8, suffix: '', label: 'Universities involved', sub: "Mentors from Pakistan's best" },
+  { value: 4, suffix: '+', label: 'Seminars held', sub: 'Building financial literacy' },
+];
+---
+
+<section class="section stats" aria-labelledby="stats-title">
+  <div class="container">
+    <div class="stats__panel" data-reveal>
+      <div class="stats__intro">
+        <p class="eyebrow">Our impact so far</p>
+        <h2 id="stats-title" class="stats__title">
+          A track record, not a promise.
+        </h2>
+        <p class="stats__note text-muted">
+          Our last internship cohort shipped a full slate of student research —
+          mentored end-to-end and published under each author's own name. We're
+          relaunching with the same standard and far greater ambition.
+        </p>
+      </div>
+
+      <dl class="stats__grid">
+        {stats.map((s) => (
+          <div class="stat">
+            <dt class="stat__value">
+              <span
+                class="stat__num"
+                data-count
+                data-to={s.value}
+                data-suffix={s.suffix}
+              >0{s.suffix}</span>
+            </dt>
+            <dd class="stat__label">{s.label}</dd>
+            <dd class="stat__sub">{s.sub}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stats__panel {
+    display: grid;
+    gap: var(--space-12);
+    padding: clamp(2rem, 5vw, 4rem);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 120% at 100% 0%, rgba(227, 177, 103, 0.08), transparent 55%),
+      var(--es-surface);
+  }
+  .stats__title {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1rem;
+  }
+  .stats__note {
+    max-width: 42ch;
+  }
+  .stats__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1.5rem, 4vw, 2.5rem) 1.5rem;
+  }
+  .stat {
+    border-left: 1px solid var(--es-line);
+    padding-left: 1.25rem;
+  }
+  .stat__value {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 3.75rem);
+    line-height: 1;
+    font-weight: 500;
+  }
+  .stat__num {
+    background: var(--es-grad-gold);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat__label {
+    margin-top: 0.75rem;
+    font-weight: 600;
+    color: var(--es-cream);
+  }
+  .stat__sub {
+    margin-top: 0.2rem;
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+  }
+
+  @media (min-width: 880px) {
+    .stats__panel {
+      grid-template-columns: 0.9fr 1.1fr;
+      align-items: center;
+    }
+    .stats__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

@@ -1,0 +1,425 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+---
+
+<Layout
+  title="Join the Team — Economic Sentinel"
+  description="Join Economic Sentinel — help build financial literacy for the next generation. Writing, design, coding, and coordination roles open."
+>
+  <PageHero
+    eyebrow="Join the team"
+    title="Help us build something that matters."
+    lead="Economic Sentinel is youth-led and growing. Whether you write, design, code, or coordinate — there's a place for you."
+  />
+
+  <section class="section">
+    <div class="container form-container">
+      <div class="form-wrap" data-reveal>
+        <form class="es-form" data-form>
+          <h2 class="form-heading">Economic Sentinel — Join the Team</h2>
+
+          <!-- Full name -->
+          <div class="form-group">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" id="name" name="name" required class="form-input" autocomplete="name" />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" required class="form-input" autocomplete="email" />
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="form-group">
+            <label for="whatsapp" class="form-label">WhatsApp number</label>
+            <input type="tel" id="whatsapp" name="whatsapp" required class="form-input" autocomplete="tel" placeholder="+92..." />
+          </div>
+
+          <!-- Institution -->
+          <div class="form-group">
+            <label for="institution" class="form-label">Institution & year/grade</label>
+            <input type="text" id="institution" name="institution" required class="form-input" placeholder="e.g. LUMS, Year 2" />
+          </div>
+
+          <!-- What can you help with? (multi-select) -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">What can you help with?</legend>
+            <p class="form-hint">Select all that apply.</p>
+            <div class="checkbox-grid">
+              {[
+                'Writing & editing',
+                'Social media & design',
+                'Website / coding',
+                'General coordination & ops',
+                'Not sure yet, just want to contribute',
+              ].map((opt) => (
+                <label class="checkbox-label">
+                  <input type="checkbox" name="help_with" value={opt} class="checkbox-input" />
+                  <span class="checkbox-box" aria-hidden="true"></span>
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Why ES? -->
+          <div class="form-group">
+            <label for="why" class="form-label">Why do you want to be part of Economic Sentinel?</label>
+            <p class="form-hint">3–4 sentences is perfect.</p>
+            <textarea id="why" name="why" required rows="4" class="form-input form-textarea"></textarea>
+          </div>
+
+          <!-- Hours per week -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">How many hours a week can you realistically give?</legend>
+            <div class="radio-group">
+              {['1–3 hrs', '3–5 hrs', '5+ hrs'].map((opt) => (
+                <label class="radio-label">
+                  <input type="radio" name="hours" value={opt} required class="radio-input" />
+                  <span class="radio-dot" aria-hidden="true"></span>
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Availability -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">Are you available during the upcoming cycle?</legend>
+            <div class="radio-group">
+              {['Yes', 'No', 'Partially'].map((opt) => (
+                <label class="radio-label">
+                  <input type="radio" name="available" value={opt} required class="radio-input" />
+                  <span class="radio-dot" aria-hidden="true"></span>
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Portfolio -->
+          <div class="form-group">
+            <label for="portfolio" class="form-label">
+              Anything you've made, written, or built that you're proud of?
+            </label>
+            <p class="form-hint">Link or describe — fully optional.</p>
+            <textarea id="portfolio" name="portfolio" rows="3" class="form-input form-textarea"></textarea>
+          </div>
+
+          <!-- Anything else -->
+          <div class="form-group">
+            <label for="anything_else" class="form-label">Anything else you want us to know?</label>
+            <textarea id="anything_else" name="anything_else" rows="2" class="form-input form-textarea"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary form-submit">
+            Submit application <span class="arrow" aria-hidden="true">→</span>
+          </button>
+
+          <p class="form-success" hidden data-success>
+            Application submitted! We'll be in touch soon.
+          </p>
+          <p class="form-error" hidden data-error></p>
+        </form>
+      </div>
+
+      <aside class="form-sidebar" data-reveal>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">What we're looking for</h3>
+          <p class="sidebar-card__desc">
+            Curious, committed students who want to help build something real.
+            No specific qualifications — just willingness to show up and do the work.
+          </p>
+        </div>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">What you get</h3>
+          <ul class="sidebar-list" role="list">
+            <li><span class="dot" aria-hidden="true"></span>Real responsibility from day one</li>
+            <li><span class="dot" aria-hidden="true"></span>Work that builds your portfolio</li>
+            <li><span class="dot" aria-hidden="true"></span>A network of ambitious peers</li>
+            <li><span class="dot" aria-hidden="true"></span>A team that takes you seriously</li>
+          </ul>
+        </div>
+        <div class="sidebar-card sidebar-card--highlight">
+          <h3 class="sidebar-card__title">Looking to do research instead?</h3>
+          <p class="sidebar-card__desc">
+            Our Research Internship is a separate program with its own application.
+          </p>
+          <a href="/internship" class="btn btn-ghost sidebar-btn">
+            View the internship <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { initScroll } from '../scripts/scroll-reveal';
+  initScroll();
+
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  const success = document.querySelector<HTMLElement>('[data-success]');
+  const errorEl = document.querySelector<HTMLElement>('[data-error]');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (errorEl) errorEl.hidden = true;
+
+    const fd = new FormData(form);
+    const helpWith = fd.getAll('help_with') as string[];
+
+    const { supabase } = await import('../lib/supabase');
+    const { error } = await supabase.from('join_applications').insert({
+      name: fd.get('name') as string,
+      email: fd.get('email') as string,
+      whatsapp: fd.get('whatsapp') as string,
+      institution: fd.get('institution') as string,
+      help_with: helpWith,
+      why: fd.get('why') as string,
+      hours: fd.get('hours') as string,
+      available: fd.get('available') as string,
+      portfolio: (fd.get('portfolio') as string) || '',
+      anything_else: (fd.get('anything_else') as string) || '',
+    });
+
+    if (error) {
+      if (errorEl) { errorEl.textContent = 'Something went wrong. Please try again.'; errorEl.hidden = false; }
+      return;
+    }
+    form.reset();
+    if (success) success.hidden = false;
+  });
+</script>
+
+<style>
+  .form-container {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+
+  .form-heading {
+    font-size: var(--fs-h3);
+    margin-bottom: var(--space-6);
+    color: var(--es-gold-light);
+  }
+
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  .form-fieldset {
+    border: 0;
+    padding: 0;
+  }
+  .form-label {
+    display: block;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--es-cream);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .form-hint {
+    font-size: 0.78rem;
+    color: var(--es-muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    color: var(--es-cream);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    transition: border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .form-input::placeholder {
+    color: var(--es-muted);
+    opacity: 0.6;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--es-gold);
+    box-shadow: 0 0 0 3px rgba(227, 177, 103, 0.15);
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .form-error {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(220, 60, 60, 0.12);
+    border: 1px solid rgba(220, 60, 60, 0.3);
+    color: #f08080;
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+
+  /* Checkboxes */
+  .checkbox-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .checkbox-label,
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: var(--fs-small);
+    color: var(--es-cream);
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    transition: border-color var(--dur) var(--ease-out);
+  }
+  .checkbox-label:hover,
+  .radio-label:hover {
+    border-color: rgba(227, 177, 103, 0.4);
+  }
+  .checkbox-input,
+  .radio-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .checkbox-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 1.5px solid var(--es-muted);
+    flex: none;
+    display: grid;
+    place-items: center;
+    transition: all var(--dur) var(--ease-out);
+  }
+  .checkbox-input:checked + .checkbox-box {
+    background: var(--es-gold);
+    border-color: var(--es-gold);
+  }
+  .checkbox-input:checked + .checkbox-box::after {
+    content: '✓';
+    color: var(--es-base);
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .checkbox-input:focus-visible + .checkbox-box {
+    outline: 2px solid var(--es-gold-light);
+    outline-offset: 2px;
+  }
+
+  /* Radio buttons */
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .radio-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--es-muted);
+    flex: none;
+    display: grid;
+    place-items: center;
+    transition: all var(--dur) var(--ease-out);
+  }
+  .radio-input:checked + .radio-dot {
+    border-color: var(--es-gold);
+  }
+  .radio-input:checked + .radio-dot::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--es-gold);
+  }
+  .radio-input:focus-visible + .radio-dot {
+    outline: 2px solid var(--es-gold-light);
+    outline-offset: 2px;
+  }
+
+  .form-submit {
+    margin-top: 0.75rem;
+  }
+  .form-success {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(227, 177, 103, 0.12);
+    border: 1px solid rgba(227, 177, 103, 0.3);
+    color: var(--es-gold-light);
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+
+  /* Sidebar */
+  .form-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .sidebar-card {
+    padding: 1.75rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background: var(--es-surface);
+  }
+  .sidebar-card--highlight {
+    background:
+      radial-gradient(120% 100% at 0% 0%, rgba(227, 177, 103, 0.1), transparent 55%),
+      var(--es-surface);
+  }
+  .sidebar-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    color: var(--es-gold-light);
+  }
+  .sidebar-card__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+  }
+  .sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: var(--fs-small);
+  }
+  .sidebar-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--es-cream);
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--es-gold);
+    flex: none;
+  }
+  .sidebar-btn {
+    margin-top: 0.75rem;
+    --btn-pad-y: 0.65rem;
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 880px) {
+    .form-container {
+      grid-template-columns: 1.3fr 0.7fr;
+      align-items: start;
+    }
+  }
+</style>

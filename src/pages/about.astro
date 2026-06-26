@@ -1,0 +1,397 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+
+const values = [
+  { title: 'Rigor', desc: 'We publish research that is carefully argued, clearly written, and honestly sourced. Quality is the standard, not the exception.' },
+  { title: 'Access', desc: 'Economics belongs to everyone. Our research is open, our doors are open, and any student willing to do the work has a place here.' },
+  { title: 'Youth agency', desc: 'Young people are not the economists of tomorrow — they are capable of original thought today. We build the platform; they do the thinking.' },
+  { title: 'Mentorship', desc: 'The best learning happens in working relationships, not lecture halls. Every program we run is built around near-peer mentorship.' },
+];
+
+const mentorUniversities = [
+  'LUMS',
+  'IBA Karachi',
+  'NUST',
+  'GCU Lahore',
+  'QAU Islamabad',
+  'FAST-NUCES',
+  'UET Lahore',
+  'FC College',
+];
+
+---
+
+<Layout
+  title="About — Economic Sentinel"
+  description="Economic Sentinel is a youth-led economics research organization from Pakistan. Learn about our story, mission, values, and the team behind the work."
+>
+  <PageHero
+    eyebrow="Who we are"
+    title="Youth reshaping economic futures."
+    lead="Economic Sentinel is a student-led organization from Pakistan bridging the gap between financial literacy and young people. We publish original research, host seminars, and run a mentored internship — because understanding the economy should not be a privilege."
+  />
+
+  <!-- Our story -->
+  <section class="section">
+    <div class="container story-grid">
+      <div class="story" data-reveal>
+        <p class="eyebrow">Our story</p>
+        <h2>We started because nobody else was doing this.</h2>
+        <div class="story__body">
+          <p>
+            Economic Sentinel was born from a simple observation: young people in Pakistan
+            have opinions about the economy — strong ones — but almost no platform to turn
+            those opinions into rigorous, publishable research.
+          </p>
+          <p>
+            We launched our first Research Internship cohort with a handful of interns and
+            mentors, published a full slate of original articles, and proved the model works.
+            Then we went quiet — not because we lost interest, but because we wanted to come
+            back far more ambitious.
+          </p>
+          <p>
+            This is the relaunch. Same standards, bigger vision. We're building the platform
+            we wished existed when we were starting out: a place where student research is
+            taken seriously, where mentorship is real, and where young economists can find
+            their footing.
+          </p>
+        </div>
+      </div>
+      <div class="story-aside" data-reveal>
+        <div class="story-card">
+          <span class="story-card__label">Founded</span>
+          <span class="story-card__value text-gold">2023</span>
+        </div>
+        <div class="story-card">
+          <span class="story-card__label">Based in</span>
+          <span class="story-card__value text-gold">Pakistan</span>
+        </div>
+        <div class="story-card">
+          <span class="story-card__label">Structure</span>
+          <span class="story-card__value text-gold">Youth-led</span>
+        </div>
+        <div class="story-card">
+          <span class="story-card__label">Driven by</span>
+          <span class="story-card__value text-gold">Impact</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission -->
+  <section class="section mission-section">
+    <div class="container">
+      <div class="mission-panel" data-reveal>
+        <p class="eyebrow">Our mission</p>
+        <blockquote class="mission-quote">
+          Bridge the gap between financial literacy and the next generation — by
+          publishing student research, hosting seminars, and training young
+          economists through mentored programs.
+        </blockquote>
+        <p class="text-muted mission-sub">
+          We believe that economics is too important to be left to economists alone.
+          When young people understand how economies work, they make better decisions —
+          for themselves, their communities, and their country.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section">
+    <div class="container">
+      <header data-reveal>
+        <p class="eyebrow">What we stand for</p>
+        <h2 class="values-title">Our values.</h2>
+      </header>
+      <div class="values-grid">
+        {values.map((v) => (
+          <div class="value-card" data-reveal>
+            <h3 class="value-card__title">{v.title}</h3>
+            <p class="value-card__desc">{v.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section team-section">
+    <div class="container">
+      <div class="team-statement" data-reveal>
+        <p class="eyebrow">The team</p>
+        <h2 class="team-heading">Built by students, for students.</h2>
+        <p class="team-desc">
+          Economic Sentinel is entirely student-run — from editorial direction
+          to program design to mentorship. We believe that young people are the
+          best advocates for their own generation's financial literacy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mentors -->
+  <section class="section">
+    <div class="container">
+      <div class="mentors-panel" data-reveal>
+        <div class="mentors-text">
+          <p class="eyebrow">Our mentors</p>
+          <h2>Guided by the best.</h2>
+          <p class="lead">
+            Our mentors are current students at Pakistan's leading universities.
+            They bring academic rigor, research experience, and the near-peer empathy
+            that makes mentorship actually work.
+          </p>
+        </div>
+        <div class="mentors-unis">
+          {mentorUniversities.map((u) => (
+            <span class="mentor-uni">{u}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="about-cta" data-reveal>
+        <h2 class="about-cta__title">Want to be part of this?</h2>
+        <p class="lead about-cta__lead">
+          Whether you want to write research, mentor interns, or just follow the work —
+          there's a place for you.
+        </p>
+        <div class="about-cta__actions">
+          <a href="/internship" class="btn btn-primary">
+            Apply to the internship <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="/contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { initScroll } from '../scripts/scroll-reveal';
+  initScroll();
+</script>
+
+<style>
+  /* Story */
+  .story-grid {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+  .story h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1.5rem;
+  }
+  .story__body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--es-cream);
+    opacity: 0.9;
+  }
+  .story-aside {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .story-card {
+    padding: 1.25rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius);
+    background: var(--es-surface);
+  }
+  .story-card__label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--es-muted);
+    margin-bottom: 0.5rem;
+  }
+  .story-card__value {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 500;
+  }
+
+  @media (min-width: 880px) {
+    .story-grid {
+      grid-template-columns: 1.4fr 0.6fr;
+      align-items: start;
+    }
+  }
+
+  /* Mission */
+  .mission-section {
+    background: var(--es-surface);
+    border-top: 1px solid var(--es-line);
+    border-bottom: 1px solid var(--es-line);
+  }
+  .mission-panel {
+    max-width: 50rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+  .mission-panel .eyebrow {
+    justify-content: center;
+  }
+  .mission-panel .eyebrow::before { display: none; }
+  .mission-quote {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    line-height: var(--lh-snug);
+    font-weight: 400;
+    font-style: italic;
+    margin: 1.5rem 0;
+    color: var(--es-gold-light);
+    border: 0;
+    padding: 0;
+  }
+  .mission-sub {
+    max-width: 48ch;
+    margin-inline: auto;
+  }
+
+  /* Values */
+  .values-title {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 0;
+  }
+  header:has(.values-title) {
+    margin-bottom: var(--space-8);
+  }
+  .values-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  .value-card {
+    padding: 1.75rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius);
+    background: var(--es-surface);
+    transition: border-color var(--dur) var(--ease-out);
+  }
+  .value-card:hover {
+    border-color: rgba(227, 177, 103, 0.35);
+  }
+  .value-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+    color: var(--es-gold-light);
+  }
+  .value-card__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+  }
+
+  @media (min-width: 720px) {
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1080px) {
+    .values-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  /* Team */
+  .team-section {
+    background: var(--es-surface);
+    border-top: 1px solid var(--es-line);
+    border-bottom: 1px solid var(--es-line);
+  }
+  .team-statement {
+    max-width: 40rem;
+  }
+  .team-heading {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1rem;
+  }
+  .team-desc {
+    color: var(--es-muted);
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+  }
+
+  /* Mentors */
+  .mentors-panel {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+    padding: clamp(2rem, 5vw, 3.5rem);
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 120% at 100% 0%, rgba(227, 177, 103, 0.08), transparent 55%),
+      var(--es-surface);
+  }
+  .mentors-text h2 {
+    font-size: var(--fs-h2);
+    margin: 0.75rem 0 1rem;
+  }
+  .mentors-unis {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-content: flex-start;
+  }
+  .mentor-uni {
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--es-line);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--es-cream);
+    background: var(--es-base);
+    transition: border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out);
+  }
+  .mentor-uni:hover {
+    border-color: var(--es-gold);
+    color: var(--es-gold);
+  }
+
+  @media (min-width: 880px) {
+    .mentors-panel {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+    }
+  }
+
+  /* CTA */
+  .about-cta {
+    text-align: center;
+    padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 4rem);
+    border: 1px solid rgba(227, 177, 103, 0.28);
+    border-radius: var(--radius-lg);
+    background:
+      radial-gradient(120% 140% at 50% -20%, rgba(227, 177, 103, 0.14), transparent 55%),
+      linear-gradient(180deg, var(--es-surface), var(--es-base));
+  }
+  .about-cta__title {
+    font-size: var(--fs-h1);
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+  .about-cta__lead {
+    max-width: 48ch;
+    margin: 1rem auto 2rem;
+    color: var(--es-cream);
+    opacity: 0.85;
+  }
+  .about-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    justify-content: center;
+  }
+</style>

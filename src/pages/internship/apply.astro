@@ -1,0 +1,378 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+
+// ┌──────────────────────────────────────────────────────┐
+// │  FLIP THIS TO `true` WHEN APPLICATIONS ARE OPEN.     │
+// │  When false, visitors see a "coming soon" redirect.  │
+// └──────────────────────────────────────────────────────┘
+const APPLICATIONS_OPEN = false;
+
+if (!APPLICATIONS_OPEN) {
+  return Astro.redirect('/internship');
+}
+---
+
+<Layout
+  title="Apply — Research Internship — Economic Sentinel"
+  description="Apply to the Economic Sentinel Research Internship. A structured, mentored program in economics, finance and business."
+>
+  <PageHero
+    eyebrow="Apply now"
+    title="Research Internship Application"
+    lead="Fill out the form below. We review applications holistically — curiosity and ambition matter more than grades."
+  />
+
+  <section class="section">
+    <div class="container form-container">
+      <div class="form-wrap" data-reveal>
+        <form class="es-form" data-form>
+          <!-- Full name -->
+          <div class="form-group">
+            <label for="name" class="form-label">Full name</label>
+            <input type="text" id="name" name="name" required class="form-input" autocomplete="name" />
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" name="email" required class="form-input" autocomplete="email" />
+          </div>
+
+          <!-- WhatsApp -->
+          <div class="form-group">
+            <label for="whatsapp" class="form-label">WhatsApp number</label>
+            <input type="tel" id="whatsapp" name="whatsapp" required class="form-input" autocomplete="tel" placeholder="+92..." />
+          </div>
+
+          <!-- City & country -->
+          <div class="form-group">
+            <label for="location" class="form-label">City & country</label>
+            <input type="text" id="location" name="location" required class="form-input" placeholder="e.g. Lahore, Pakistan" />
+          </div>
+
+          <!-- Grade / institution -->
+          <div class="form-group">
+            <label for="institution" class="form-label">Current grade / institution</label>
+            <input type="text" id="institution" name="institution" required class="form-input" placeholder="e.g. O-Levels, LGS" />
+          </div>
+
+          <!-- Module (single choice) -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">Which module?</legend>
+            <div class="radio-stack">
+              {[
+                'Economic Policy & Business Strategy',
+                'Development Economics & Organizational Management',
+                'Financial Markets & Data Analysis',
+              ].map((mod) => (
+                <label class="radio-label">
+                  <input type="radio" name="module" value={mod} required class="radio-input" />
+                  <span class="radio-dot" aria-hidden="true"></span>
+                  <span>{mod}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- Why this module -->
+          <div class="form-group">
+            <label for="why_module" class="form-label">
+              Why this module, and what economic topic interests you?
+            </label>
+            <p class="form-hint">3–4 sentences.</p>
+            <textarea id="why_module" name="why_module" required rows="4" class="form-input form-textarea"></textarea>
+          </div>
+
+          <!-- Prior experience -->
+          <div class="form-group">
+            <label for="experience" class="form-label">Any prior writing or research experience?</label>
+            <p class="form-hint">Optional — no experience needed to apply.</p>
+            <textarea id="experience" name="experience" rows="3" class="form-input form-textarea"></textarea>
+          </div>
+
+          <!-- Commitment -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">Can you commit ~2–3 weeks during the internship dates?</legend>
+            <div class="radio-group">
+              {['Yes', 'No'].map((opt) => (
+                <label class="radio-label">
+                  <input type="radio" name="can_commit" value={opt} required class="radio-input" />
+                  <span class="radio-dot" aria-hidden="true"></span>
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <!-- How did you hear -->
+          <div class="form-group">
+            <label for="hear_about" class="form-label">How did you hear about us?</label>
+            <input type="text" id="hear_about" name="hear_about" class="form-input" placeholder="e.g. Instagram, a friend, school..." />
+          </div>
+
+          <!-- Fee waiver -->
+          <fieldset class="form-group form-fieldset">
+            <legend class="form-label">Would you need a need-based fee waiver?</legend>
+            <div class="radio-group">
+              {['Yes', 'No'].map((opt) => (
+                <label class="radio-label">
+                  <input type="radio" name="fee_waiver" value={opt} required class="radio-input" />
+                  <span class="radio-dot" aria-hidden="true"></span>
+                  <span>{opt}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn btn-primary form-submit">
+            Submit application <span class="arrow" aria-hidden="true">→</span>
+          </button>
+
+          <p class="form-success" hidden data-success>
+            Application submitted! We'll review it and get back to you soon.
+          </p>
+          <p class="form-error" hidden data-error></p>
+        </form>
+      </div>
+
+      <aside class="form-sidebar" data-reveal>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">What happens next</h3>
+          <ul class="sidebar-list" role="list">
+            <li><span class="dot" aria-hidden="true"></span>We review your application</li>
+            <li><span class="dot" aria-hidden="true"></span>Selected applicants get matched with a mentor</li>
+            <li><span class="dot" aria-hidden="true"></span>The internship runs for 2–3 weeks</li>
+            <li><span class="dot" aria-hidden="true"></span>You finish with a published paper under your name</li>
+          </ul>
+        </div>
+        <div class="sidebar-card">
+          <h3 class="sidebar-card__title">Need-based waivers</h3>
+          <p class="sidebar-card__desc">
+            We want the best applicants regardless of financial situation.
+            If you need a fee waiver, just say so — no explanation needed,
+            no impact on your application.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  import { initScroll } from '../../scripts/scroll-reveal';
+  initScroll();
+
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  const success = document.querySelector<HTMLElement>('[data-success]');
+  const errorEl = document.querySelector<HTMLElement>('[data-error]');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (errorEl) errorEl.hidden = true;
+
+    const fd = new FormData(form);
+
+    const { supabase } = await import('../../lib/supabase');
+    const { error } = await supabase.from('internship_applications').insert({
+      name: fd.get('name') as string,
+      email: fd.get('email') as string,
+      whatsapp: fd.get('whatsapp') as string,
+      location: fd.get('location') as string,
+      institution: fd.get('institution') as string,
+      module: fd.get('module') as string,
+      why_module: fd.get('why_module') as string,
+      experience: (fd.get('experience') as string) || '',
+      can_commit: fd.get('can_commit') as string,
+      hear_about: (fd.get('hear_about') as string) || '',
+      fee_waiver: fd.get('fee_waiver') as string,
+    });
+
+    if (error) {
+      if (errorEl) { errorEl.textContent = 'Something went wrong. Please try again.'; errorEl.hidden = false; }
+      return;
+    }
+    form.reset();
+    if (success) success.hidden = false;
+  });
+</script>
+
+<style>
+  .form-container {
+    display: grid;
+    gap: var(--space-12);
+    grid-template-columns: 1fr;
+  }
+  .form-group {
+    margin-bottom: 1.25rem;
+  }
+  .form-fieldset {
+    border: 0;
+    padding: 0;
+  }
+  .form-label {
+    display: block;
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--es-cream);
+    letter-spacing: 0.02em;
+    margin-bottom: 0.4rem;
+  }
+  .form-hint {
+    font-size: 0.78rem;
+    color: var(--es-muted);
+    margin-bottom: 0.5rem;
+  }
+  .form-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    color: var(--es-cream);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    transition: border-color var(--dur) var(--ease-out),
+      box-shadow var(--dur) var(--ease-out);
+  }
+  .form-input::placeholder {
+    color: var(--es-muted);
+    opacity: 0.6;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--es-gold);
+    box-shadow: 0 0 0 3px rgba(227, 177, 103, 0.15);
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .form-error {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(220, 60, 60, 0.12);
+    border: 1px solid rgba(220, 60, 60, 0.3);
+    color: #f08080;
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+  .radio-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-size: var(--fs-small);
+    color: var(--es-cream);
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--es-line);
+    background: var(--es-surface);
+    transition: border-color var(--dur) var(--ease-out);
+  }
+  .radio-label:hover {
+    border-color: rgba(227, 177, 103, 0.4);
+  }
+  .radio-input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .radio-dot {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid var(--es-muted);
+    flex: none;
+    display: grid;
+    place-items: center;
+    transition: all var(--dur) var(--ease-out);
+  }
+  .radio-input:checked + .radio-dot {
+    border-color: var(--es-gold);
+  }
+  .radio-input:checked + .radio-dot::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--es-gold);
+  }
+  .radio-input:focus-visible + .radio-dot {
+    outline: 2px solid var(--es-gold-light);
+    outline-offset: 2px;
+  }
+  .form-submit {
+    margin-top: 0.75rem;
+  }
+  .form-success {
+    margin-top: 1rem;
+    padding: 0.85rem 1.25rem;
+    border-radius: var(--radius-sm);
+    background: rgba(227, 177, 103, 0.12);
+    border: 1px solid rgba(227, 177, 103, 0.3);
+    color: var(--es-gold-light);
+    font-weight: 600;
+    font-size: var(--fs-small);
+  }
+
+  .form-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .sidebar-card {
+    padding: 1.75rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-lg);
+    background: var(--es-surface);
+  }
+  .sidebar-card__title {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    color: var(--es-gold-light);
+  }
+  .sidebar-card__desc {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    line-height: 1.55;
+  }
+  .sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: var(--fs-small);
+  }
+  .sidebar-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    color: var(--es-cream);
+  }
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--es-gold);
+    flex: none;
+  }
+
+  @media (min-width: 880px) {
+    .form-container {
+      grid-template-columns: 1.3fr 0.7fr;
+      align-items: start;
+    }
+  }
+</style>
