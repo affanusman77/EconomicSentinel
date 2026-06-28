@@ -126,11 +126,11 @@ There were three personalities the researcher approached, all of whom are inspir
 and CEOs of Pakistan.
 Summary;
 
-![](image.png)
+![](/images/articles/leadership/image.png)
 
 1- Mr Tahir Nihad Bajwa who has led 20+ companies as CEO, believes that without leadership companies remain directionless. He says that one of the most impressive qualities of a leader is being the “jack of all trades.” Moreover, he views his subordinates as heart to heart friends and strategizes to lead by example and empathise with them when needed. He says that problems and challenges should always be sailed ahead of, and that pure intentions of uplifting fellows are essential for leadership. 2- Ms Rubab Tahir the CEO of GalEarth defines that an organisation only replicates what a leader truly believes in. Some of the qualities that define a good leader, in her opinion, include; Ability to maintain composure, self accountability, faith , clarity of purpose, and persistence. Her strategy is to conduct several thought provoking sessions with her team to foster innovation and pursue connectivity. She aims to boost a culture of entrepreneurship and personal development in her organisation over the next 5 years. 3- Mr Tariq Mehmood the chairman of Kamand Private Limited is of the view that guidance, self example, deduction, honesty, and determination are some of the qualities that are found in a seasoned leader. He says that there are several problems in the workforce these days that a leader must overcome; including the unnecessary use of smartphones/procrastination and the reluctance of sticking with one firm for long periods of time. He advises that every professional, including a leader, needs to work hard to justify his pay.
 
-![](image.png)
+![](/images/articles/leadership/image.png)
 
 About the Contributor;
 Ms Rozina Asif is the current Principal of The City School Rawal Campus with 25 years of
@@ -150,7 +150,7 @@ briefed that it was a process involving comparative analysis with other campuses
 stereotypes of the staff, and most of all, engaging the student community and youth by
 various means.
 
-![](image.png)
+![](/images/articles/leadership/image.png)
 
 About the Contributor;
 Sir Nasir Malik is the current Senior Master (SM) and Student Counsellor at The City School
