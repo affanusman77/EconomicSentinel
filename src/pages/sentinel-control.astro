@@ -356,25 +356,44 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
     document.body.style.overflow = '';
   }
 
-  // CSV export
+  // CSV export (UTF-8 BOM so Excel reads it correctly)
   document.querySelectorAll('[data-export]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const type = (btn as HTMLElement).dataset.export as string;
       const data = type === 'join' ? joinData : internData;
-      if (!data.length) return;
-      const keys = Object.keys(data[0]).filter((k) => k !== 'id');
-      const csv = [keys.join(','), ...data.map((r) =>
-        keys.map((k) => {
-          let v = Array.isArray(r[k]) ? r[k].join('; ') : String(r[k] ?? '');
-          if (v.includes(',') || v.includes('"') || v.includes('\n')) v = `"${v.replace(/"/g, '""')}"`;
-          return v;
-        }).join(',')
-      )].join('\n');
-      const blob = new Blob([csv], { type: 'text/csv' });
+      if (!data.length) {
+        alert('No submissions to export yet.');
+        return;
+      }
+
+      const headers: Record<string, string[]> = {
+        join: ['created_at', 'name', 'email', 'whatsapp', 'institution', 'help_with', 'why', 'hours', 'available', 'portfolio', 'anything_else', 'status'],
+        internship: ['created_at', 'name', 'email', 'whatsapp', 'location', 'institution', 'module', 'why_module', 'experience', 'can_commit', 'hear_about', 'fee_waiver', 'status'],
+      };
+      const keys = headers[type] ?? Object.keys(data[0]).filter((k) => k !== 'id');
+
+      const escCSV = (val: unknown): string => {
+        let v = Array.isArray(val) ? val.join('; ') : String(val ?? '');
+        if (v.includes(',') || v.includes('"') || v.includes('\n')) {
+          v = '"' + v.replace(/"/g, '""') + '"';
+        }
+        return v;
+      };
+
+      const rows = [keys.join(',')];
+      for (const r of data) {
+        rows.push(keys.map((k) => escCSV(r[k])).join(','));
+      }
+
+      const BOM = '﻿';
+      const blob = new Blob([BOM + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `${type}-applications-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = `ES-${type}-applications-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(a);
       a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
     });
   });
 </script>
