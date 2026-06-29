@@ -96,6 +96,12 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
                 <option value="accepted">Accepted</option>
                 <option value="declined">Declined</option>
               </select>
+              <select class="form-input table-filter" data-filter-module>
+                <option value="all">All modules</option>
+                <option value="Economic Policy & Business Strategy">Economic Policy & Business Strategy</option>
+                <option value="Development Economics & Organizational Management">Development Economics & Organizational Management</option>
+                <option value="Financial Markets & Data Analysis">Financial Markets & Data Analysis</option>
+              </select>
               <button class="btn btn-ghost table-export" data-export="internship">Export CSV</button>
             </div>
             <div class="table-scroll">
@@ -215,10 +221,16 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
   function renderStats() {
     const newJoin = joinData.filter((r) => r.status === 'new').length;
     const newIntern = internData.filter((r) => r.status === 'new').length;
+    const mod1 = internData.filter((r) => r.module?.includes('Economic Policy')).length;
+    const mod2 = internData.filter((r) => r.module?.includes('Development')).length;
+    const mod3 = internData.filter((r) => r.module?.includes('Financial Markets')).length;
     statsEl.innerHTML = `
       <div class="stat-card"><span class="stat-card__val">${joinData.length}</span><span class="stat-card__label">Join applications</span></div>
-      <div class="stat-card"><span class="stat-card__val">${internData.length}</span><span class="stat-card__label">Internship applications</span></div>
+      <div class="stat-card"><span class="stat-card__val">${internData.length}</span><span class="stat-card__label">Internship total</span></div>
       <div class="stat-card stat-card--gold"><span class="stat-card__val">${newJoin + newIntern}</span><span class="stat-card__label">Unreviewed</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod1}</span><span class="stat-card__label">Economic Policy</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod2}</span><span class="stat-card__label">Dev Economics</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod3}</span><span class="stat-card__label">Financial Markets</span></div>
     `;
   }
 
@@ -237,8 +249,13 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
     const empty = type === 'join' ? emptyJoin : emptyIntern;
     const filterEl = document.querySelector<HTMLSelectElement>(type === 'join' ? '[data-filter-join]' : '[data-filter-intern]');
     const filter = filterEl?.value ?? 'all';
+    const moduleEl = document.querySelector<HTMLSelectElement>('[data-filter-module]');
+    const moduleFilter = moduleEl?.value ?? 'all';
 
-    const filtered = filter === 'all' ? data : data.filter((r) => r.status === filter);
+    let filtered = filter === 'all' ? [...data] : data.filter((r) => r.status === filter);
+    if (type === 'internship' && moduleFilter !== 'all') {
+      filtered = filtered.filter((r) => r.module === moduleFilter);
+    }
     empty.hidden = filtered.length > 0;
 
     if (type === 'join') {
@@ -287,6 +304,7 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
   // Filters
   document.querySelector('[data-filter-join]')?.addEventListener('change', () => renderTable('join'));
   document.querySelector('[data-filter-intern]')?.addEventListener('change', () => renderTable('internship'));
+  document.querySelector('[data-filter-module]')?.addEventListener('change', () => renderTable('internship'));
 
   // Detail view
   function showDetail(type: 'join' | 'internship', id: string) {
