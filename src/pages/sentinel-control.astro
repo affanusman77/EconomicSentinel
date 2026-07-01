@@ -113,7 +113,6 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
                     <th>Email</th>
                     <th>Module</th>
                     <th>Location</th>
-                    <th>Fee waiver</th>
                     <th>Status</th>
                     <th></th>
                   </tr>
@@ -279,7 +278,6 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
           <td>${esc(r.email)}</td>
           <td>${esc(r.module)}</td>
           <td>${esc(r.location)}</td>
-          <td>${esc(r.fee_waiver)}</td>
           <td>${statusBadge(r.status)}</td>
           <td><button class="btn-link" data-view-intern="${r.id}">View</button></td>
         </tr>
@@ -324,7 +322,6 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
           ['Location', row.location], ['Institution', row.institution], ['Module', row.module],
           ['Why this module', row.why_module], ['Experience', row.experience || '—'],
           ['Can commit', row.can_commit], ['Heard about us', row.hear_about || '—'],
-          ['Fee waiver', row.fee_waiver],
         ];
 
     detailContent.innerHTML = `
@@ -386,7 +383,7 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
 
       const headers: Record<string, string[]> = {
         join: ['created_at', 'name', 'email', 'whatsapp', 'institution', 'help_with', 'why', 'hours', 'available', 'portfolio', 'anything_else', 'status'],
-        internship: ['created_at', 'name', 'email', 'whatsapp', 'location', 'institution', 'module', 'why_module', 'experience', 'can_commit', 'hear_about', 'fee_waiver', 'status'],
+        internship: ['created_at', 'name', 'email', 'whatsapp', 'location', 'institution', 'module', 'why_module', 'experience', 'can_commit', 'hear_about', 'status'],
       };
       const keys = headers[type] ?? Object.keys(data[0]).filter((k) => k !== 'id');
 

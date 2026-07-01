@@ -54,7 +54,7 @@ if (!APPLICATIONS_OPEN) {
           <!-- Grade / institution -->
           <div class="form-group">
             <label for="institution" class="form-label">Current grade / institution</label>
-            <input type="text" id="institution" name="institution" required class="form-input" placeholder="e.g. O-Levels, LGS" />
+            <input type="text" id="institution" name="institution" required class="form-input" placeholder="e.g. A-Levels, LGS" />
           </div>
 
           <!-- Module (single choice) -->
@@ -93,7 +93,8 @@ if (!APPLICATIONS_OPEN) {
 
           <!-- Commitment -->
           <fieldset class="form-group form-fieldset">
-            <legend class="form-label">Can you commit ~2–3 weeks during the internship dates?</legend>
+            <legend class="form-label">Can you commit 2–3 weeks to the internship?</legend>
+            <p class="form-hint">Completely virtual. The cohort runs for 2–3 weeks, likely starting 6 July.</p>
             <div class="radio-group">
               {['Yes', 'No'].map((opt) => (
                 <label class="radio-label">
@@ -111,20 +112,13 @@ if (!APPLICATIONS_OPEN) {
             <input type="text" id="hear_about" name="hear_about" class="form-input" placeholder="e.g. Instagram, a friend, school..." />
           </div>
 
-          <!-- Fee waiver -->
-          <fieldset class="form-group form-fieldset">
-            <legend class="form-label">Would you need a need-based fee waiver?</legend>
-            <p class="form-hint">A one-time acceptance fee of PKR 3,500 applies upon selection. Waivers are granted without questions — just indicate below.</p>
-            <div class="radio-group">
-              {['Yes', 'No'].map((opt) => (
-                <label class="radio-label">
-                  <input type="radio" name="fee_waiver" value={opt} required class="radio-input" />
-                  <span class="radio-dot" aria-hidden="true"></span>
-                  <span>{opt}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
+          <!-- Acceptance note -->
+          <div class="form-group">
+            <p class="form-note">
+              If accepted, you'll receive an acceptance email with the acceptance fee of
+              PKR 3,500 and the enrolment form to complete your spot.
+            </p>
+          </div>
 
           <button type="submit" class="btn btn-primary form-submit">
             Submit application <span class="arrow" aria-hidden="true">→</span>
@@ -186,7 +180,8 @@ if (!APPLICATIONS_OPEN) {
       experience: (fd.get('experience') as string) || '',
       can_commit: fd.get('can_commit') as string,
       hear_about: (fd.get('hear_about') as string) || '',
-      fee_waiver: fd.get('fee_waiver') as string,
+      // Fee waivers no longer collected; column kept non-null in DB.
+      fee_waiver: '',
     });
 
     if (error) {
@@ -223,6 +218,15 @@ if (!APPLICATIONS_OPEN) {
     font-size: 0.78rem;
     color: var(--es-muted);
     margin-bottom: 0.5rem;
+  }
+  .form-note {
+    font-size: var(--fs-small);
+    color: var(--es-muted);
+    line-height: 1.55;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-sm);
+    background: rgba(227, 177, 103, 0.05);
   }
   .form-input {
     width: 100%;
