@@ -6,7 +6,7 @@ import PageHero from '../../components/PageHero.astro';
 // │  FLIP THIS TO `true` WHEN APPLICATIONS ARE OPEN.     │
 // │  When false, visitors see a "coming soon" redirect.  │
 // └──────────────────────────────────────────────────────┘
-const APPLICATIONS_OPEN = false;
+const APPLICATIONS_OPEN = true;
 
 if (!APPLICATIONS_OPEN) {
   return Astro.redirect('/internship');
@@ -62,9 +62,9 @@ if (!APPLICATIONS_OPEN) {
             <legend class="form-label">Which module?</legend>
             <div class="radio-stack">
               {[
-                'Economic Policy & Business Strategy',
-                'Development Economics & Organizational Management',
-                'Financial Markets & Data Analysis',
+                'Cost of Living & the Macroeconomy',
+                'Jobs, Skills & the Future of Work',
+                'Money, Trade & Global Flows',
               ].map((mod) => (
                 <label class="radio-label">
                   <input type="radio" name="module" value={mod} required class="radio-input" />

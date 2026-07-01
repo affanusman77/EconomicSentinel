@@ -1,0 +1,186 @@
+---
+// Homepage register-now popup. Appears once per browser session, a beat after
+// the hero paints. Dismissal is remembered so it never nags on re-navigation.
+---
+
+<div class="rpop" data-rpop hidden>
+  <div class="rpop__backdrop" data-rpop-close aria-hidden="true"></div>
+  <div class="rpop__card" role="dialog" aria-modal="true" aria-labelledby="rpop-title">
+    <button class="rpop__close" data-rpop-close aria-label="Close">&times;</button>
+
+    <img src="/logo.png" alt="" width="52" height="52" class="rpop__logo" />
+    <p class="rpop__eyebrow">Registrations open</p>
+    <h2 id="rpop-title" class="rpop__title">The Research Internship is now taking applications.</h2>
+    <p class="rpop__text">
+      Pick a module, get mentored end-to-end, and publish original research under
+      your own name. Three tracks built around what Pakistani students actually care about.
+    </p>
+
+    <ul class="rpop__modules" role="list">
+      <li>M1 · Cost of Living &amp; the Macroeconomy</li>
+      <li>M2 · Jobs, Skills &amp; the Future of Work</li>
+      <li>M3 · Money, Trade &amp; Global Flows</li>
+    </ul>
+
+    <div class="rpop__actions">
+      <a href="/internship/apply" class="btn btn-primary rpop__cta">
+        Register now <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <button type="button" class="btn btn-ghost" data-rpop-close>Maybe later</button>
+    </div>
+    <p class="rpop__fine">Mentored by top-university students · Need-based fee waivers available</p>
+  </div>
+</div>
+
+<script>
+  const KEY = 'es_register_popup_seen';
+  const pop = document.querySelector<HTMLElement>('[data-rpop]');
+  const card = pop?.querySelector<HTMLElement>('.rpop__card');
+  if (pop && !sessionStorage.getItem(KEY)) {
+    const open = () => {
+      pop.hidden = false;
+      requestAnimationFrame(() => pop.classList.add('is-open'));
+      document.body.style.overflow = 'hidden';
+      card?.querySelector<HTMLElement>('.rpop__cta')?.focus();
+    };
+    const close = () => {
+      pop.classList.remove('is-open');
+      document.body.style.overflow = '';
+      sessionStorage.setItem(KEY, '1');
+      setTimeout(() => { pop.hidden = true; }, 300);
+    };
+
+    // Let the hero land first, then invite.
+    const timer = window.setTimeout(open, 1400);
+
+    pop.querySelectorAll('[data-rpop-close]').forEach((el) =>
+      el.addEventListener('click', close)
+    );
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !pop.hidden) close();
+    });
+    // If the visitor clicks Register, don't re-show next session-nav either.
+    pop.querySelector('.rpop__cta')?.addEventListener('click', () => {
+      window.clearTimeout(timer);
+      sessionStorage.setItem(KEY, '1');
+    });
+  }
+</script>
+
+<style>
+  .rpop {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    display: grid;
+    place-items: center;
+    padding: var(--gutter);
+  }
+  .rpop[hidden] { display: none; }
+
+  .rpop__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 15, 22, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    transition: opacity 0.3s var(--ease-out);
+  }
+  .rpop.is-open .rpop__backdrop { opacity: 1; }
+
+  .rpop__card {
+    position: relative;
+    max-width: 460px;
+    width: 100%;
+    padding: clamp(1.75rem, 5vw, 2.75rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(227, 177, 103, 0.3);
+    background:
+      radial-gradient(130% 120% at 50% -10%, rgba(227, 177, 103, 0.14), transparent 55%),
+      linear-gradient(180deg, var(--es-surface), var(--es-base));
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    transition: opacity 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+  }
+  .rpop.is-open .rpop__card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .rpop__close {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 0;
+    color: var(--es-muted);
+    font-size: 1.4rem;
+    border-radius: var(--radius-sm);
+    transition: color var(--dur) var(--ease-out);
+  }
+  .rpop__close:hover { color: var(--es-cream); }
+
+  .rpop__logo {
+    margin: 0 auto 1rem;
+    border-radius: 50%;
+  }
+  .rpop__eyebrow {
+    font-size: var(--fs-eyebrow);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--es-gold);
+    margin-bottom: 0.75rem;
+  }
+  .rpop__title {
+    font-size: clamp(1.4rem, 4vw, 1.75rem);
+    line-height: 1.15;
+    margin-bottom: 0.85rem;
+  }
+  .rpop__text {
+    color: var(--es-muted);
+    font-size: var(--fs-small);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+  }
+  .rpop__modules {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+  .rpop__modules li {
+    font-size: 0.82rem;
+    color: var(--es-cream);
+    padding: 0.5rem 0.85rem;
+    border: 1px solid var(--es-line);
+    border-radius: var(--radius-sm);
+    background: rgba(227, 177, 103, 0.04);
+  }
+  .rpop__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .rpop__fine {
+    margin-top: 1.1rem;
+    font-size: 0.72rem;
+    color: var(--es-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rpop__card {
+      transition: opacity 0.2s linear;
+      transform: none;
+    }
+  }
+</style>

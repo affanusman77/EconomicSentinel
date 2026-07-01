@@ -98,9 +98,9 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
               </select>
               <select class="form-input table-filter" data-filter-module>
                 <option value="all">All modules</option>
-                <option value="Economic Policy & Business Strategy">Economic Policy & Business Strategy</option>
-                <option value="Development Economics & Organizational Management">Development Economics & Organizational Management</option>
-                <option value="Financial Markets & Data Analysis">Financial Markets & Data Analysis</option>
+                <option value="Cost of Living & the Macroeconomy">M1 · Cost of Living & the Macroeconomy</option>
+                <option value="Jobs, Skills & the Future of Work">M2 · Jobs, Skills & the Future of Work</option>
+                <option value="Money, Trade & Global Flows">M3 · Money, Trade & Global Flows</option>
               </select>
               <button class="btn btn-ghost table-export" data-export="internship">Export CSV</button>
             </div>
@@ -221,16 +221,16 @@ const dashPasscode = import.meta.env.PUBLIC_DASHBOARD_PASSCODE || 'sentinel2024'
   function renderStats() {
     const newJoin = joinData.filter((r) => r.status === 'new').length;
     const newIntern = internData.filter((r) => r.status === 'new').length;
-    const mod1 = internData.filter((r) => r.module?.includes('Economic Policy')).length;
-    const mod2 = internData.filter((r) => r.module?.includes('Development')).length;
-    const mod3 = internData.filter((r) => r.module?.includes('Financial Markets')).length;
+    const mod1 = internData.filter((r) => r.module?.includes('Cost of Living')).length;
+    const mod2 = internData.filter((r) => r.module?.includes('Jobs')).length;
+    const mod3 = internData.filter((r) => r.module?.includes('Money')).length;
     statsEl.innerHTML = `
       <div class="stat-card"><span class="stat-card__val">${joinData.length}</span><span class="stat-card__label">Join applications</span></div>
       <div class="stat-card"><span class="stat-card__val">${internData.length}</span><span class="stat-card__label">Internship total</span></div>
       <div class="stat-card stat-card--gold"><span class="stat-card__val">${newJoin + newIntern}</span><span class="stat-card__label">Unreviewed</span></div>
-      <div class="stat-card"><span class="stat-card__val">${mod1}</span><span class="stat-card__label">Economic Policy</span></div>
-      <div class="stat-card"><span class="stat-card__val">${mod2}</span><span class="stat-card__label">Dev Economics</span></div>
-      <div class="stat-card"><span class="stat-card__val">${mod3}</span><span class="stat-card__label">Financial Markets</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod1}</span><span class="stat-card__label">M1 · Cost of Living</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod2}</span><span class="stat-card__label">M2 · Jobs & Skills</span></div>
+      <div class="stat-card"><span class="stat-card__val">${mod3}</span><span class="stat-card__label">M3 · Money & Trade</span></div>
     `;
   }
 

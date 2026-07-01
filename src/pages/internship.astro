@@ -13,9 +13,9 @@ import PageHero from '../components/PageHero.astro';
     lead="A structured, mentored internship in economics, finance and business. You'll be paired with a mentor from a top Pakistani university, guided end-to-end through original research, and published under your own name."
   >
     <div class="hero-actions" data-reveal>
-      <button type="button" class="btn btn-primary" data-open-coming-soon>
-        Apply now <span class="arrow" aria-hidden="true">→</span>
-      </button>
+      <a href="/internship/apply" class="btn btn-primary">
+        Register now <span class="arrow" aria-hidden="true">→</span>
+      </a>
       <a href="#modules" class="btn btn-ghost">Explore the program</a>
     </div>
   </PageHero>
@@ -69,47 +69,49 @@ import PageHero from '../components/PageHero.astro';
       <div class="modules-grid">
         <article class="module-card" data-reveal>
           <span class="module-card__no">Module 01</span>
-          <h3 class="module-card__title">Economic Policy & Business Strategy</h3>
+          <h3 class="module-card__title">Cost of Living & the Macroeconomy</h3>
           <p class="module-card__desc">
-            Macro policy, trade, fiscal analysis, and how governments and firms make
-            decisions under uncertainty. Ideal for students drawn to the intersection
-            of policy and commerce.
+            The "why does everything feel expensive" track. Inflation, prices, housing
+            affordability, purchasing power, and the policy levers behind them — the most
+            relatable entry point into economics.
           </p>
           <ul class="module-card__topics" role="list">
-            <li><span class="pillar__dot" aria-hidden="true"></span>Fiscal & monetary policy</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Trade dynamics</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Corporate strategy</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Regulatory economics</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Inflation & prices</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Housing affordability</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Purchasing power</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Monetary policy levers</li>
           </ul>
         </article>
 
         <article class="module-card" data-reveal>
           <span class="module-card__no">Module 02</span>
-          <h3 class="module-card__title">Development Economics & Organizational Management</h3>
+          <h3 class="module-card__title">Jobs, Skills & the Future of Work</h3>
           <p class="module-card__desc">
-            Poverty, inequality, social protection, and how institutions shape economic
-            outcomes. For students interested in the human side of economics.
+            Graduate unemployment, the skills gap, freelancing and the gig economy, and how
+            young people move from education into earning. The highest personal stakes for
+            students.
           </p>
           <ul class="module-card__topics" role="list">
-            <li><span class="pillar__dot" aria-hidden="true"></span>Poverty & inequality</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Social protection programs</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Institutional design</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Organizational behavior</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Graduate unemployment</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>The skills gap</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Freelancing & gig economy</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>The digital economy</li>
           </ul>
         </article>
 
         <article class="module-card" data-reveal>
           <span class="module-card__no">Module 03</span>
-          <h3 class="module-card__title">Financial Markets & Data Analysis</h3>
+          <h3 class="module-card__title">Money, Trade & Global Flows</h3>
           <p class="module-card__desc">
-            Equities, currencies, central banking, and quantitative reasoning. For
-            students who want to understand how markets work — and how to read them.
+            Remittances, trade, the currency, banking and fintech, and foreign investment —
+            the threads that connect Pakistan's economy to the world. The most
+            analyst-driven track for ambitious students.
           </p>
           <ul class="module-card__topics" role="list">
-            <li><span class="pillar__dot" aria-hidden="true"></span>Equity & currency markets</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Central bank policy</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Financial data analysis</li>
-            <li><span class="pillar__dot" aria-hidden="true"></span>Risk & valuation</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Remittances & the currency</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Trade & foreign investment</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Banking & fintech</li>
+            <li><span class="pillar__dot" aria-hidden="true"></span>Global capital flows</li>
           </ul>
         </article>
       </div>
@@ -209,70 +211,26 @@ import PageHero from '../components/PageHero.astro';
   <section class="section cta-final">
     <div class="container">
       <div class="cta-final__panel" data-reveal>
-        <p class="eyebrow">Applications opening soon</p>
+        <p class="eyebrow">Applications open</p>
         <h2 class="cta-final__title">Ready to write research that matters?</h2>
         <p class="lead cta-final__lead">
           The next cohort of the Economic Sentinel Research Internship is forming now.
           It's mentored, it's structured, and it ends with your name on a published paper.
         </p>
-        <button type="button" class="btn btn-primary" data-open-coming-soon>
-          Apply to the Research Internship <span class="arrow" aria-hidden="true">→</span>
-        </button>
+        <a href="/internship/apply" class="btn btn-primary">
+          Register for the Research Internship <span class="arrow" aria-hidden="true">→</span>
+        </a>
         <p class="cta-final__fine text-muted">
           Remote-friendly across Pakistan · Mentored by top-university students
         </p>
       </div>
     </div>
   </section>
-
-  <!-- Coming Soon Modal -->
-  <div class="modal-overlay" data-modal hidden>
-    <div class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
-      <button class="modal__close" data-close-modal aria-label="Close">&times;</button>
-      <div class="modal__icon" aria-hidden="true">
-        <span class="modal__pulse"></span>
-      </div>
-      <h2 id="modal-title" class="modal__title">Applications opening soon</h2>
-      <p class="modal__text">
-        The next cohort of the Research Internship is being finalised. We'll
-        announce applications on our socials — follow us to be the first to know.
-      </p>
-      <div class="modal__actions">
-        <a href="/join" class="btn btn-primary">
-          Join the team instead <span class="arrow" aria-hidden="true">→</span>
-        </a>
-        <button type="button" class="btn btn-ghost" data-close-modal>Close</button>
-      </div>
-    </div>
-  </div>
 </Layout>
 
 <script>
   import { initScroll } from '../scripts/scroll-reveal';
   initScroll();
-
-  const modal = document.querySelector<HTMLElement>('[data-modal]');
-  const openers = document.querySelectorAll('[data-open-coming-soon]');
-  const closers = document.querySelectorAll('[data-close-modal]');
-
-  const setModal = (open: boolean) => {
-    if (!modal) return;
-    modal.hidden = !open;
-    document.body.style.overflow = open ? 'hidden' : '';
-    if (open) {
-      const first = modal.querySelector<HTMLElement>('[data-close-modal], a, button');
-      first?.focus();
-    }
-  };
-
-  openers.forEach((b) => b.addEventListener('click', () => setModal(true)));
-  closers.forEach((b) => b.addEventListener('click', () => setModal(false)));
-  modal?.addEventListener('click', (e) => {
-    if (e.target === modal) setModal(false);
-  });
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setModal(false);
-  });
 </script>
 
 <style>
